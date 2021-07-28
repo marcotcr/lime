@@ -211,12 +211,12 @@ class LimeImageExplainer(object):
             top = np.argsort(labels[0])[-top_labels:]
             ret_exp.top_labels = list(top)
             ret_exp.top_labels.reverse()
-        for label in top:
+        for (lidx, label) in enumerate(top):
             (ret_exp.intercept[label],
              ret_exp.local_exp[label],
              ret_exp.score[label],
              ret_exp.local_pred[label]) = self.base.explain_instance_with_data(
-                data, labels, distances, label, num_features,
+                data, labels, distances, lidx, num_features,
                 model_regressor=model_regressor,
                 feature_selection=self.feature_selection)
         return ret_exp
