@@ -110,7 +110,7 @@ class IndexedString(object):
         else:
             # with the split_expression as a non-capturing group (?:), we don't need to filter out
             # the separator character from the split results.
-            splitter = re.compile(r'(%s)|$' % split_expression)
+            splitter = re.compile(r'(%s)' % split_expression)
             self.as_list = [s for s in splitter.split(self.raw) if s]
             non_word = splitter.match
 
