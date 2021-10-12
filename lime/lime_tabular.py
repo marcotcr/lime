@@ -3,33 +3,41 @@ Functions for explaining classifiers that use tabular data (matrices).
 """
 import collections
 import copy
-from functools import partial
 import json
 import warnings
+from functools import partial
 
 import numpy as np
 import scipy as sp
 import sklearn
 import sklearn.preprocessing
-from sklearn.utils import check_random_state
-from pyDOE2 import lhs
 from scipy.stats.distributions import norm
+from sklearn.utils import check_random_state
 
-from lime.discretize import QuartileDiscretizer
-from lime.discretize import DecileDiscretizer
-from lime.discretize import EntropyDiscretizer
-from lime.discretize import BaseDiscretizer
-from lime.discretize import StatsDiscretizer
-from . import explanation
-from . import lime_base
+from lime.discretize import (
+    BaseDiscretizer,
+    DecileDiscretizer,
+    EntropyDiscretizer,
+    QuartileDiscretizer,
+    StatsDiscretizer,
+)
+from pyDOE2 import lhs
+
+from . import explanation, lime_base
 
 
 class TableDomainMapper(explanation.DomainMapper):
     """Maps feature ids to names, generates table views, etc"""
 
-    def __init__(self, feature_names, feature_values, scaled_row,
-                 categorical_features, discretized_feature_names=None,
-                 feature_indexes=None):
+    def __init__(
+        self,
+        feature_names,
+        feature_values,
+        scaled_row,
+        categorical_features,
+        discretized_feature_names=None,
+        feature_indexes=None,
+    ):
         """Init.
 
         Args:
@@ -65,13 +73,9 @@ class TableDomainMapper(explanation.DomainMapper):
             names = self.discretized_feature_names
         return [(names[x[0]], x[1]) for x in exp]
 
-    def visualize_instance_html(self,
-                                exp,
-                                label,
-                                div_name,
-                                exp_object_name,
-                                show_table=True,
-                                show_all=False):
+    def visualize_instance_html(
+        self, exp, label, div_name, exp_object_name, show_table=True, show_all=False,
+    ):
         """Shows the current example in a table format.
 
         Args:
@@ -83,7 +87,7 @@ class TableDomainMapper(explanation.DomainMapper):
              show_all: if True, show zero-weighted features in the table.
         """
         if not show_table:
-            return ''
+            return ""
         weights = [0] * len(self.feature_names)
         for x in exp:
             weights[x[0]] = x[1]
@@ -92,25 +96,27 @@ class TableDomainMapper(explanation.DomainMapper):
             fnames = [self.exp_feature_names[i] for i in self.feature_indexes]
             fweights = [weights[i] for i in self.feature_indexes]
             if show_all:
-                out_list = list(zip(fnames,
-                                    self.feature_values,
-                                    fweights))
+                out_list = list(zip(fnames, self.feature_values, fweights))
             else:
-                out_dict = dict(map(lambda x: (x[0], (x[1], x[2], x[3])),
-                                zip(self.feature_indexes,
-                                    fnames,
-                                    self.feature_values,
-                                    fweights)))
+                out_dict = dict(
+                    map(
+                        lambda x: (x[0], (x[1], x[2], x[3])),
+                        zip(self.feature_indexes, fnames, self.feature_values, fweights,),
+                    )
+                )
                 out_list = [out_dict.get(x[0], (str(x[0]), 0.0, 0.0)) for x in exp]
         else:
-            out_list = list(zip(self.exp_feature_names,
-                                self.feature_values,
-                                weights))
+            out_list = list(zip(self.exp_feature_names, self.feature_values, weights))
             if not show_all:
                 out_list = [out_list[x[0]] for x in exp]
-        ret = u'''
+        ret = u"""
             %s.show_raw_tabular(%s, %d, %s);
-        ''' % (exp_object_name, json.dumps(out_list, ensure_ascii=False), label, div_name)
+        """ % (
+            exp_object_name,
+            json.dumps(out_list, ensure_ascii=False),
+            label,
+            div_name,
+        )
         return ret
 
 
@@ -123,23 +129,25 @@ class LimeTabularExplainer(object):
     feature that is 1 when the value is the same as the instance being
     explained."""
 
-    def __init__(self,
-                 training_data,
-                 mode="classification",
-                 training_labels=None,
-                 feature_names=None,
-                 categorical_features=None,
-                 categorical_names=None,
-                 kernel_width=None,
-                 kernel=None,
-                 verbose=False,
-                 class_names=None,
-                 feature_selection='auto',
-                 discretize_continuous=True,
-                 discretizer='quartile',
-                 sample_around_instance=False,
-                 random_state=None,
-                 training_data_stats=None):
+    def __init__(
+        self,
+        training_data,
+        mode="classification",
+        training_labels=None,
+        feature_names=None,
+        categorical_features=None,
+        categorical_names=None,
+        kernel_width=None,
+        kernel=None,
+        verbose=False,
+        class_names=None,
+        feature_selection="auto",
+        discretize_continuous=True,
+        discretizer="quartile",
+        sample_around_instance=False,
+        random_state=None,
+        training_data_stats=None,
+    ):
         """Init function.
 
         Args:
@@ -209,46 +217,58 @@ class LimeTabularExplainer(object):
             # Set the discretizer if training data stats are provided
             if self.training_data_stats:
                 discretizer = StatsDiscretizer(
-                    training_data, self.categorical_features,
-                    self.feature_names, labels=training_labels,
+                    training_data,
+                    self.categorical_features,
+                    self.feature_names,
+                    labels=training_labels,
                     data_stats=self.training_data_stats,
-                    random_state=self.random_state)
+                    random_state=self.random_state,
+                )
 
-            if discretizer == 'quartile':
+            if discretizer == "quartile":
                 self.discretizer = QuartileDiscretizer(
-                        training_data, self.categorical_features,
-                        self.feature_names, labels=training_labels,
-                        random_state=self.random_state)
-            elif discretizer == 'decile':
+                    training_data,
+                    self.categorical_features,
+                    self.feature_names,
+                    labels=training_labels,
+                    random_state=self.random_state,
+                )
+            elif discretizer == "decile":
                 self.discretizer = DecileDiscretizer(
-                        training_data, self.categorical_features,
-                        self.feature_names, labels=training_labels,
-                        random_state=self.random_state)
-            elif discretizer == 'entropy':
+                    training_data,
+                    self.categorical_features,
+                    self.feature_names,
+                    labels=training_labels,
+                    random_state=self.random_state,
+                )
+            elif discretizer == "entropy":
                 self.discretizer = EntropyDiscretizer(
-                        training_data, self.categorical_features,
-                        self.feature_names, labels=training_labels,
-                        random_state=self.random_state)
+                    training_data,
+                    self.categorical_features,
+                    self.feature_names,
+                    labels=training_labels,
+                    random_state=self.random_state,
+                )
             elif isinstance(discretizer, BaseDiscretizer):
                 self.discretizer = discretizer
             else:
-                raise ValueError('''Discretizer must be 'quartile',''' +
-                                 ''' 'decile', 'entropy' or a''' +
-                                 ''' BaseDiscretizer instance''')
+                raise ValueError(
+                    """Discretizer must be 'quartile',"""
+                    + """ 'decile', 'entropy' or a"""
+                    + """ BaseDiscretizer instance"""
+                )
             self.categorical_features = list(range(training_data.shape[1]))
 
             # Get the discretized_training_data when the stats are not provided
-            if(self.training_data_stats is None):
-                discretized_training_data = self.discretizer.discretize(
-                    training_data)
+            if self.training_data_stats is None:
+                discretized_training_data = self.discretizer.discretize(training_data)
 
         if kernel_width is None:
-            kernel_width = np.sqrt(training_data.shape[1]) * .75
+            kernel_width = np.sqrt(training_data.shape[1]) * 0.75
         kernel_width = float(kernel_width)
 
         if kernel is None:
-            def kernel(d, kernel_width):
-                return np.sqrt(np.exp(-(d ** 2) / kernel_width ** 2))
+            kernel = self.default_kernel_fn
 
         kernel_fn = partial(kernel, kernel_width=kernel_width)
 
@@ -276,14 +296,17 @@ class LimeTabularExplainer(object):
                 frequencies = training_data_stats["feature_frequencies"][feature]
 
             self.feature_values[feature] = values
-            self.feature_frequencies[feature] = (np.array(frequencies) /
-                                                 float(sum(frequencies)))
+            self.feature_frequencies[feature] = np.array(frequencies) / float(sum(frequencies))
             self.scaler.mean_[feature] = 0
             self.scaler.scale_[feature] = 1
 
     @staticmethod
+    def default_kernel_fn(d, kernel_width):
+        return np.sqrt(np.exp(-(d ** 2) / kernel_width ** 2))
+
+    @staticmethod
     def convert_and_round(values):
-        return ['%.2f' % v for v in values]
+        return ["%.2f" % v for v in values]
 
     @staticmethod
     def validate_training_data_stats(training_data_stats):
@@ -291,21 +314,30 @@ class LimeTabularExplainer(object):
             Method to validate the structure of training data stats
         """
         stat_keys = list(training_data_stats.keys())
-        valid_stat_keys = ["means", "mins", "maxs", "stds", "feature_values", "feature_frequencies"]
+        valid_stat_keys = [
+            "means",
+            "mins",
+            "maxs",
+            "stds",
+            "feature_values",
+            "feature_frequencies",
+        ]
         missing_keys = list(set(valid_stat_keys) - set(stat_keys))
         if len(missing_keys) > 0:
             raise Exception("Missing keys in training_data_stats. Details: %s" % (missing_keys))
 
-    def explain_instance(self,
-                         data_row,
-                         predict_fn,
-                         labels=(1,),
-                         top_labels=None,
-                         num_features=10,
-                         num_samples=5000,
-                         distance_metric='euclidean',
-                         model_regressor=None,
-                         sampling_method='gaussian'):
+    def explain_instance(
+        self,
+        data_row,
+        predict_fn,
+        labels=(1,),
+        top_labels=None,
+        num_features=10,
+        num_samples=5000,
+        distance_metric="euclidean",
+        model_regressor=None,
+        sampling_method="gaussian",
+    ):
         """Generates explanations for a prediction.
 
         First, we generate neighborhood data by randomly perturbing features
@@ -353,9 +385,7 @@ class LimeTabularExplainer(object):
         else:
             scaled_data = (data - self.scaler.mean_) / self.scaler.scale_
         distances = sklearn.metrics.pairwise_distances(
-                scaled_data,
-                scaled_data[0].reshape(1, -1),
-                metric=distance_metric
+            scaled_data, scaled_data[0].reshape(1, -1), metric=distance_metric
         ).ravel()
 
         yss = predict_fn(inverse)
@@ -364,26 +394,31 @@ class LimeTabularExplainer(object):
         # along with prediction probabilities
         if self.mode == "classification":
             if len(yss.shape) == 1:
-                raise NotImplementedError("LIME does not currently support "
-                                          "classifier models without probability "
-                                          "scores. If this conflicts with your "
-                                          "use case, please let us know: "
-                                          "https://github.com/datascienceinc/lime/issues/16")
+                raise NotImplementedError(
+                    "LIME does not currently support "
+                    "classifier models without probability "
+                    "scores. If this conflicts with your "
+                    "use case, please let us know: "
+                    "https://github.com/datascienceinc/lime/issues/16"
+                )
             elif len(yss.shape) == 2:
                 if self.class_names is None:
                     self.class_names = [str(x) for x in range(yss[0].shape[0])]
                 else:
                     self.class_names = list(self.class_names)
                 if not np.allclose(yss.sum(axis=1), 1.0):
-                    warnings.warn("""
+                    warnings.warn(
+                        """
                     Prediction probabilties do not sum to 1, and
                     thus does not constitute a probability space.
                     Check that you classifier outputs probabilities
                     (Not log probabilities, or actual class predictions).
-                    """)
+                    """
+                    )
             else:
-                raise ValueError("Your model outputs "
-                                 "arrays with {} dimensions".format(len(yss.shape)))
+                raise ValueError(
+                    "Your model outputs " "arrays with {} dimensions".format(len(yss.shape))
+                )
 
         # for regression, the output should be a one-dimensional array of predictions
         else:
@@ -392,8 +427,12 @@ class LimeTabularExplainer(object):
                     yss = np.array([v[0] for v in yss])
                 assert isinstance(yss, np.ndarray) and len(yss.shape) == 1
             except AssertionError:
-                raise ValueError("Your model needs to output single-dimensional \
-                    numpyarrays, not arrays of {} dimensions".format(yss.shape))
+                raise ValueError(
+                    "Your model needs to output single-dimensional \
+                    numpyarrays, not arrays of {} dimensions".format(
+                        yss.shape
+                    )
+                )
 
             predicted_value = yss[0]
             min_y = min(yss)
@@ -419,8 +458,8 @@ class LimeTabularExplainer(object):
             name = int(data_row[i])
             if i in self.categorical_names:
                 name = self.categorical_names[i][name]
-            feature_names[i] = '%s=%s' % (feature_names[i], name)
-            values[i] = 'True'
+            feature_names[i] = "%s=%s" % (feature_names[i], name)
+            values[i] = "True"
         categorical_features = self.categorical_features
 
         discretized_feature_names = None
@@ -429,18 +468,21 @@ class LimeTabularExplainer(object):
             discretized_instance = self.discretizer.discretize(data_row)
             discretized_feature_names = copy.deepcopy(feature_names)
             for f in self.discretizer.names:
-                discretized_feature_names[f] = self.discretizer.names[f][int(
-                        discretized_instance[f])]
+                discretized_feature_names[f] = self.discretizer.names[f][
+                    int(discretized_instance[f])
+                ]
 
-        domain_mapper = TableDomainMapper(feature_names,
-                                          values,
-                                          scaled_data[0],
-                                          categorical_features=categorical_features,
-                                          discretized_feature_names=discretized_feature_names,
-                                          feature_indexes=feature_indexes)
-        ret_exp = explanation.Explanation(domain_mapper,
-                                          mode=self.mode,
-                                          class_names=self.class_names)
+        domain_mapper = TableDomainMapper(
+            feature_names,
+            values,
+            scaled_data[0],
+            categorical_features=categorical_features,
+            discretized_feature_names=discretized_feature_names,
+            feature_indexes=feature_indexes,
+        )
+        ret_exp = explanation.Explanation(
+            domain_mapper, mode=self.mode, class_names=self.class_names
+        )
         if self.mode == "classification":
             ret_exp.predict_proba = yss[0]
             if top_labels:
@@ -453,17 +495,20 @@ class LimeTabularExplainer(object):
             ret_exp.max_value = max_y
             labels = [0]
         for label in labels:
-            (ret_exp.intercept[label],
-             ret_exp.local_exp[label],
-             ret_exp.score[label],
-             ret_exp.local_pred[label]) = self.base.explain_instance_with_data(
-                    scaled_data,
-                    yss,
-                    distances,
-                    label,
-                    num_features,
-                    model_regressor=model_regressor,
-                    feature_selection=self.feature_selection)
+            (
+                ret_exp.intercept[label],
+                ret_exp.local_exp[label],
+                ret_exp.score[label],
+                ret_exp.local_pred[label],
+            ) = self.base.explain_instance_with_data(
+                scaled_data,
+                yss,
+                distances,
+                label,
+                num_features,
+                model_regressor=model_regressor,
+                feature_selection=self.feature_selection,
+            )
 
         if self.mode == "regression":
             ret_exp.intercept[1] = ret_exp.intercept[0]
@@ -472,10 +517,7 @@ class LimeTabularExplainer(object):
 
         return ret_exp
 
-    def __data_inverse(self,
-                       data_row,
-                       num_samples,
-                       sampling_method):
+    def __data_inverse(self, data_row, num_samples, sampling_method):
         """Generates a neighborhood around a prediction.
 
         For numerical features, perturb them by sampling from a Normal(0,1) and
@@ -518,23 +560,27 @@ class LimeTabularExplainer(object):
                 scale = scale[non_zero_indexes]
                 mean = mean[non_zero_indexes]
 
-            if sampling_method == 'gaussian':
-                data = self.random_state.normal(0, 1, num_samples * num_cols
-                                                ).reshape(num_samples, num_cols)
+            if sampling_method == "gaussian":
+                data = self.random_state.normal(0, 1, num_samples * num_cols).reshape(
+                    num_samples, num_cols
+                )
                 data = np.array(data)
-            elif sampling_method == 'lhs':
-                data = lhs(num_cols, samples=num_samples
-                           ).reshape(num_samples, num_cols)
+            elif sampling_method == "lhs":
+                data = lhs(num_cols, samples=num_samples).reshape(num_samples, num_cols)
                 means = np.zeros(num_cols)
-                stdvs = np.array([1]*num_cols)
+                stdvs = np.array([1] * num_cols)
                 for i in range(num_cols):
                     data[:, i] = norm(loc=means[i], scale=stdvs[i]).ppf(data[:, i])
                 data = np.array(data)
             else:
-                warnings.warn('''Invalid input for sampling_method.
-                                 Defaulting to Gaussian sampling.''', UserWarning)
-                data = self.random_state.normal(0, 1, num_samples * num_cols
-                                                ).reshape(num_samples, num_cols)
+                warnings.warn(
+                    """Invalid input for sampling_method.
+                                 Defaulting to Gaussian sampling.""",
+                    UserWarning,
+                )
+                data = self.random_state.normal(0, 1, num_samples * num_cols).reshape(
+                    num_samples, num_cols
+                )
                 data = np.array(data)
 
             if self.sample_around_instance:
@@ -543,19 +589,19 @@ class LimeTabularExplainer(object):
                 data = data * scale + mean
             if is_sparse:
                 if num_cols == 0:
-                    data = sp.sparse.csr_matrix((num_samples,
-                                                 data_row.shape[1]),
-                                                dtype=data_row.dtype)
+                    data = sp.sparse.csr_matrix(
+                        (num_samples, data_row.shape[1]), dtype=data_row.dtype
+                    )
                 else:
                     indexes = np.tile(non_zero_indexes, num_samples)
                     indptr = np.array(
-                        range(0, len(non_zero_indexes) * (num_samples + 1),
-                              len(non_zero_indexes)))
+                        range(0, len(non_zero_indexes) * (num_samples + 1), len(non_zero_indexes),)
+                    )
                     data_1d_shape = data.shape[0] * data.shape[1]
                     data_1d = data.reshape(data_1d_shape)
                     data = sp.sparse.csr_matrix(
-                        (data_1d, indexes, indptr),
-                        shape=(num_samples, data_row.shape[1]))
+                        (data_1d, indexes, indptr), shape=(num_samples, data_row.shape[1]),
+                    )
             categorical_features = self.categorical_features
             first_row = data_row
         else:
@@ -565,8 +611,9 @@ class LimeTabularExplainer(object):
         for column in categorical_features:
             values = self.feature_values[column]
             freqs = self.feature_frequencies[column]
-            inverse_column = self.random_state.choice(values, size=num_samples,
-                                                      replace=True, p=freqs)
+            inverse_column = self.random_state.choice(
+                values, size=num_samples, replace=True, p=freqs
+            )
             binary_column = (inverse_column == first_row[column]).astype(int)
             binary_column[0] = 1
             inverse_column[0] = data[0, column]
@@ -593,12 +640,23 @@ class RecurrentTabularExplainer(LimeTabularExplainer):
 
     """
 
-    def __init__(self, training_data, mode="classification",
-                 training_labels=None, feature_names=None,
-                 categorical_features=None, categorical_names=None,
-                 kernel_width=None, kernel=None, verbose=False, class_names=None,
-                 feature_selection='auto', discretize_continuous=True,
-                 discretizer='quartile', random_state=None):
+    def __init__(
+        self,
+        training_data,
+        mode="classification",
+        training_labels=None,
+        feature_names=None,
+        categorical_features=None,
+        categorical_names=None,
+        kernel_width=None,
+        kernel=None,
+        verbose=False,
+        class_names=None,
+        feature_selection="auto",
+        discretize_continuous=True,
+        discretizer="quartile",
+        random_state=None,
+    ):
         """
         Args:
             training_data: numpy 3d array with shape
@@ -640,32 +698,37 @@ class RecurrentTabularExplainer(LimeTabularExplainer):
         # Reshape X
         n_samples, n_timesteps, n_features = training_data.shape
         training_data = np.transpose(training_data, axes=(0, 2, 1)).reshape(
-                n_samples, n_timesteps * n_features)
+            n_samples, n_timesteps * n_features
+        )
         self.n_timesteps = n_timesteps
         self.n_features = n_features
         if feature_names is None:
-            feature_names = ['feature%d' % i for i in range(n_features)]
+            feature_names = ["feature%d" % i for i in range(n_features)]
 
         # Update the feature names
-        feature_names = ['{}_t-{}'.format(n, n_timesteps - (i + 1))
-                         for n in feature_names for i in range(n_timesteps)]
+        feature_names = [
+            "{}_t-{}".format(n, n_timesteps - (i + 1))
+            for n in feature_names
+            for i in range(n_timesteps)
+        ]
 
         # Send off the the super class to do its magic.
         super(RecurrentTabularExplainer, self).__init__(
-                training_data,
-                mode=mode,
-                training_labels=training_labels,
-                feature_names=feature_names,
-                categorical_features=categorical_features,
-                categorical_names=categorical_names,
-                kernel_width=kernel_width,
-                kernel=kernel,
-                verbose=verbose,
-                class_names=class_names,
-                feature_selection=feature_selection,
-                discretize_continuous=discretize_continuous,
-                discretizer=discretizer,
-                random_state=random_state)
+            training_data,
+            mode=mode,
+            training_labels=training_labels,
+            feature_names=feature_names,
+            categorical_features=categorical_features,
+            categorical_names=categorical_names,
+            kernel_width=kernel_width,
+            kernel=kernel,
+            verbose=verbose,
+            class_names=class_names,
+            feature_selection=feature_selection,
+            discretize_continuous=discretize_continuous,
+            discretizer=discretizer,
+            random_state=random_state,
+        )
 
     def _make_predict_proba(self, func):
         """
@@ -683,9 +746,17 @@ class RecurrentTabularExplainer(LimeTabularExplainer):
 
         return predict_proba
 
-    def explain_instance(self, data_row, classifier_fn, labels=(1,),
-                         top_labels=None, num_features=10, num_samples=5000,
-                         distance_metric='euclidean', model_regressor=None):
+    def explain_instance(
+        self,
+        data_row,
+        classifier_fn,
+        labels=(1,),
+        top_labels=None,
+        num_features=10,
+        num_samples=5000,
+        distance_metric="euclidean",
+        model_regressor=None,
+    ):
         """Generates explanations for a prediction.
 
         First, we generate neighborhood data by randomly perturbing features
@@ -721,10 +792,12 @@ class RecurrentTabularExplainer(LimeTabularExplainer):
         # Wrap the classifier to reshape input
         classifier_fn = self._make_predict_proba(classifier_fn)
         return super(RecurrentTabularExplainer, self).explain_instance(
-            data_row, classifier_fn,
+            data_row,
+            classifier_fn,
             labels=labels,
             top_labels=top_labels,
             num_features=num_features,
             num_samples=num_samples,
             distance_metric=distance_metric,
-            model_regressor=model_regressor)
+            model_regressor=model_regressor,
+        )
