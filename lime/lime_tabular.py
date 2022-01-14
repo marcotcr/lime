@@ -191,7 +191,8 @@ class LimeTabularExplainer(object):
         self.categorical_names = categorical_names or {}
         self.sample_around_instance = sample_around_instance
         self.training_data_stats = training_data_stats
-
+        #Explainable Interpretable Model which is trained on perturbations to generate explanations
+        self.explainable_model = None
         # Check and raise proper error in stats are supplied in non-descritized path
         if self.training_data_stats:
             self.validate_training_data_stats(self.training_data_stats)
@@ -280,6 +281,9 @@ class LimeTabularExplainer(object):
                                                  float(sum(frequencies)))
             self.scaler.mean_[feature] = 0
             self.scaler.scale_[feature] = 1
+            
+        self.scaled_data = None
+        self.yss = None
 
     @staticmethod
     def convert_and_round(values):
@@ -305,7 +309,7 @@ class LimeTabularExplainer(object):
                          num_samples=5000,
                          distance_metric='euclidean',
                          model_regressor=None,
-                         sampling_method='gaussian'):
+                         sampling_method='gaussian', active_sampling_strategy = False, k = 50):
         """Generates explanations for a prediction.
 
         First, we generate neighborhood data by randomly perturbing features
@@ -335,30 +339,44 @@ class LimeTabularExplainer(object):
                 and 'sample_weight' as a parameter to model_regressor.fit()
             sampling_method: Method to sample synthetic data. Defaults to Gaussian
                 sampling. Can also use Latin Hypercube Sampling.
+            active_sampling_strategy : if active learning sampling is to be used
+            k : number of samples through active_sampling_strategy, if applicable
 
         Returns:
             An Explanation object (see explanation.py) with the corresponding
             explanations.
         """
-        if sp.sparse.issparse(data_row) and not sp.sparse.isspmatrix_csr(data_row):
-            # Preventative code: if sparse, convert to csr format if not in csr format already
-            data_row = data_row.tocsr()
-        data, inverse = self.__data_inverse(data_row, num_samples, sampling_method)
-        if sp.sparse.issparse(data):
-            # Note in sparse case we don't subtract mean since data would become dense
-            scaled_data = data.multiply(self.scaler.scale_)
-            # Multiplying with csr matrix can return a coo sparse matrix
-            if not sp.sparse.isspmatrix_csr(scaled_data):
-                scaled_data = scaled_data.tocsr()
-        else:
-            scaled_data = (data - self.scaler.mean_) / self.scaler.scale_
-        distances = sklearn.metrics.pairwise_distances(
-                scaled_data,
-                scaled_data[0].reshape(1, -1),
-                metric=distance_metric
-        ).ravel()
+        if active_sampling_strategy == False:
+            if sp.sparse.issparse(data_row) and not sp.sparse.isspmatrix_csr(data_row):
+                # Preventative code: if sparse, convert to csr format if not in csr format already
+                data_row = data_row.tocsr()
+            data, inverse = self.__data_inverse(data_row, num_samples, sampling_method)
+            if sp.sparse.issparse(data):
+                # Note in sparse case we don't subtract mean since data would become dense
+                scaled_data = data.multiply(self.scaler.scale_)
+                # Multiplying with csr matrix can return a coo sparse matrix
+                if not sp.sparse.isspmatrix_csr(scaled_data):
+                    scaled_data = scaled_data.tocsr()
+            else:
+                scaled_data = (data - self.scaler.mean_) / self.scaler.scale_
+            distances = sklearn.metrics.pairwise_distances(
+                    scaled_data,
+                    scaled_data[0].reshape(1, -1),
+                    metric=distance_metric
+            ).ravel()
 
-        yss = predict_fn(inverse)
+            yss = predict_fn(inverse)
+            
+        else:
+            scaled_data, yss = self.active_sampling(data_row, predict_fn, num_samples, k = 10, distance_metric)
+            '''
+            This will update the dataset with batch increments to retrain the explainable model
+            '''
+            if self.scaled_data != None:
+                scaled_data = np.concatenate(self.scaled_data, scaled_data)
+                yss = np.concatenate(self.yss, yss)
+            self.scaled_data = scaled_data
+            self.yss = yss
 
         # for classification, the model needs to provide a list of tuples - classes
         # along with prediction probabilities
@@ -456,7 +474,7 @@ class LimeTabularExplainer(object):
             (ret_exp.intercept[label],
              ret_exp.local_exp[label],
              ret_exp.score[label],
-             ret_exp.local_pred[label]) = self.base.explain_instance_with_data(
+             ret_exp.local_pred[label], self.explainable_model) = self.base.explain_instance_with_data(
                     scaled_data,
                     yss,
                     distances,
@@ -471,6 +489,62 @@ class LimeTabularExplainer(object):
             ret_exp.local_exp[0] = [(i, -1 * j) for i, j in ret_exp.local_exp[1]]
 
         return ret_exp
+        
+    def perturbed_predictions(self, perturbed_point):
+    '''
+    Returns prediction of the explainable model or an arbitrary perturbed point. Should be useful for focussed sampling techniques used in active learning.
+    perturbed_point : a data point from the perturbed set
+    '''
+        return self.explainable_model.predict(perturbed_point)
+        
+    def generate_samples(self, data_row, predict_fn, num_samples, distance_metric = 'euclidean'):
+    
+    '''
+    Generate random samples
+    '''
+
+        if sp.sparse.issparse(data_row) and not sp.sparse.isspmatrix_csr(data_row):
+            # Preventative code: if sparse, convert to csr format if not in csr format already
+            data_row = data_row.tocsr()
+        data, inverse = self.__data_inverse(data_row, num_samples)
+        if sp.sparse.issparse(data):
+            # Note in sparse case we don't subtract mean since data would become dense
+            scaled_data = data.multiply(self.scaler.scale_)
+            # Multiplying with csr matrix can return a coo sparse matrix
+            if not sp.sparse.isspmatrix_csr(scaled_data):
+                scaled_data = scaled_data.tocsr()
+        else:
+            scaled_data = (data - self.scaler.mean_) / self.scaler.scale_
+        distances = sklearn.metrics.pairwise_distances(
+                scaled_data,
+                scaled_data[0].reshape(1, -1),
+                metric=distance_metric
+        ).ravel()
+
+        yss = predict_fn(inverse)
+
+        return scaled_data, yss, distances
+        
+    def active_sampling(data_row, predict_fn, num_samples, k, distance_metric = 'euclidean'):
+        '''
+        Active Learning approach to update the explainable AI model.
+        '''
+    
+        scaled_data, yss, distances = self.generate_samples(data_row, predict_fn, num_samples, distance_metric)
+        y_perturbations = self.perturbed_predictions(scaled_data)
+        '''
+        Select samples based on distance between predictions and original labels. This is done by treating perturbed predictions as
+        model predictions and black box predictions as original labels.
+        '''
+        uncertainty = np.abs(y_perturbations-yss)
+        sorted_indices = np.argsort(-uncertainty)
+        '''
+        Select top k samples based on distance
+        '''
+        top_k = sorted_indices[:k]
+        final_batch = scaled_data[top_k, :]
+        return final_batch, yss[top_k]
+        
 
     def __data_inverse(self,
                        data_row,
