@@ -204,4 +204,4 @@ class LimeBase(object):
         return (easy_model.intercept_,
                 sorted(zip(used_features, easy_model.coef_),
                        key=lambda x: np.abs(x[1]), reverse=True),
-                prediction_score, local_pred)
+                prediction_score, local_pred), easy_model
