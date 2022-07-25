@@ -6,9 +6,10 @@ from functools import partial
 
 import numpy as np
 import sklearn
+import sklearn.preprocessing
 from sklearn.utils import check_random_state
 from skimage.color import gray2rgb
-from tqdm.auto import tqdm
+from tqdm import tqdm
 
 
 from . import lime_base
@@ -27,8 +28,7 @@ class ImageExplanation(object):
         self.segments = segments
         self.intercept = {}
         self.local_exp = {}
-        self.local_pred = {}
-        self.score = {}
+        self.local_pred = None
 
     def get_image_and_mask(self, label, positive_only=True, negative_only=False, hide_rest=False,
                            num_features=5, min_weight=0.):
@@ -134,7 +134,7 @@ class LimeImageExplainer(object):
                          distance_metric='cosine',
                          model_regressor=None,
                          random_seed=None,
-                         progress_bar=True):
+                         classifier_args=None):
         """Generates explanations for a prediction.
 
         First, we generate neighborhood data by randomly perturbing features
@@ -149,14 +149,13 @@ class LimeImageExplainer(object):
                 takes a numpy array and outputs prediction probabilities.  For
                 ScikitClassifiers , this is classifier.predict_proba.
             labels: iterable with labels to be explained.
-            hide_color: If not None, will hide superpixels with this color.
-                Otherwise, use the mean pixel color of the image.
+            hide_color: TODO
             top_labels: if not None, ignore labels and produce explanations for
                 the K labels with highest prediction probabilities, where K is
                 this parameter.
             num_features: maximum number of features present in explanation
             num_samples: size of the neighborhood to learn the linear model
-            batch_size: batch size for model predictions
+            batch_size: TODO
             distance_metric: the distance metric to use for weights.
             model_regressor: sklearn regressor to use in explanation. Defaults
             to Ridge regression in LimeBase. Must have model_regressor.coef_
@@ -166,7 +165,6 @@ class LimeImageExplainer(object):
             random_seed: integer used as random seed for the segmentation
                 algorithm. If None, a random integer, between 0 and 1000,
                 will be generated using the internal random number generator.
-            progress_bar: if True, show tqdm progress bar.
 
         Returns:
             An ImageExplanation object (see lime_image.py) with the corresponding
@@ -181,7 +179,10 @@ class LimeImageExplainer(object):
             segmentation_fn = SegmentationAlgorithm('quickshift', kernel_size=4,
                                                     max_dist=200, ratio=0.2,
                                                     random_seed=random_seed)
-        segments = segmentation_fn(image)
+        try:
+            segments = segmentation_fn(image)
+        except ValueError as e:
+            raise e
 
         fudged_image = image.copy()
         if hide_color is None:
@@ -194,12 +195,10 @@ class LimeImageExplainer(object):
             fudged_image[:] = hide_color
 
         top = labels
-
+        
         data, labels = self.data_labels(image, fudged_image, segments,
                                         classifier_fn, num_samples,
-                                        batch_size=batch_size,
-                                        progress_bar=progress_bar)
-
+                                        batch_size=batch_size, classifier_args=classifier_args)
         distances = sklearn.metrics.pairwise_distances(
             data,
             data[0].reshape(1, -1),
@@ -214,8 +213,7 @@ class LimeImageExplainer(object):
         for label in top:
             (ret_exp.intercept[label],
              ret_exp.local_exp[label],
-             ret_exp.score[label],
-             ret_exp.local_pred[label]) = self.base.explain_instance_with_data(
+             ret_exp.score, ret_exp.local_pred) = self.base.explain_instance_with_data(
                 data, labels, distances, label, num_features,
                 model_regressor=model_regressor,
                 feature_selection=self.feature_selection)
@@ -228,7 +226,7 @@ class LimeImageExplainer(object):
                     classifier_fn,
                     num_samples,
                     batch_size=10,
-                    progress_bar=True):
+                    classifier_args=None):
         """Generates images and predictions in the neighborhood of this image.
 
         Args:
@@ -240,7 +238,6 @@ class LimeImageExplainer(object):
                 matrix of prediction probabilities
             num_samples: size of the neighborhood to learn the linear model
             batch_size: classifier_fn will be called on batches of this size.
-            progress_bar: if True, show tqdm progress bar.
 
         Returns:
             A tuple (data, labels), where:
@@ -253,8 +250,7 @@ class LimeImageExplainer(object):
         labels = []
         data[0, :] = 1
         imgs = []
-        rows = tqdm(data) if progress_bar else data
-        for row in rows:
+        for row in data:
             temp = copy.deepcopy(image)
             zeros = np.where(row == 0)[0]
             mask = np.zeros(segments.shape).astype(bool)
@@ -263,10 +259,10 @@ class LimeImageExplainer(object):
             temp[mask] = fudged_image[mask]
             imgs.append(temp)
             if len(imgs) == batch_size:
-                preds = classifier_fn(np.array(imgs))
+                preds = classifier_fn(np.array(imgs), classifier_args=classifier_args)
                 labels.extend(preds)
                 imgs = []
         if len(imgs) > 0:
-            preds = classifier_fn(np.array(imgs))
+            preds = classifier_fn(np.array(imgs), classifier_args=classifier_args)
             labels.extend(preds)
         return data, np.array(labels)
