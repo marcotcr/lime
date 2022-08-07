@@ -400,8 +400,8 @@ class LimeTextExplainer(object):
                 prediction probabilities, where k is the number of classes.
                 For ScikitClassifiers , this is classifier.predict_proba.
             replacement_fn: A function which can be specified which defines a replacement strategy. Takes in a
-                list of strings representing the original text as a list (text_as_list: List[str]) and a list of integers
-                which represent which tokens were marked for removal (masks: List[List[int]]). Each List[int] in masks
+                list of strings representing the original text as a list (text_as_list: List[str]) and a list of boolean
+                which represent which tokens were marked for removal (masks: List[List[bool]]). Each List[int] in masks
                 represents one sampled item. Returns a List[str] where each item in List[str] is a modified version of
                 the original text. (By default no replacement is done and text is removed)
             labels: iterable with labels to be explained.
@@ -467,8 +467,8 @@ class LimeTextExplainer(object):
                 takes a string and outputs prediction probabilities. For
                 ScikitClassifier, this is classifier.predict_proba.
             replacement_fn: A function which can be specified which defines a replacement strategy. Takes in a
-                list of strings representing the original text as a list (text_as_list: List[str]) and a list of integers
-                which represent which tokens were marked for removal (masks: List[List[int]]). Each List[int] in masks
+                list of strings representing the original text as a list (text_as_list: List[str]) and a list of bools
+                which represent which tokens were marked for removal (masks: List[List[bool]]). Each List[int] in masks
                 represents one sampled item. Returns a List[str] where each item in List[str] is a modified version of
                 the original text. (By default no replacement is done and text is removed)
             num_samples: size of the neighborhood to learn the linear model
