@@ -82,7 +82,7 @@ class IndexedString(object):
     """String with various indexes."""
 
     def __init__(self, raw_string, split_expression=r'\W+', bow=True,
-                 mask_string=None):
+                 mask_string=None, replacement_fn=None):
         """Initializer.
 
         Args:
@@ -98,6 +98,7 @@ class IndexedString(object):
         """
         self.raw = raw_string
         self.mask_string = 'UNKWORDZ' if mask_string is None else mask_string
+        self.replacement_fn = replacement_fn
 
         if callable(split_expression):
             tokens = split_expression(self.raw)
@@ -160,25 +161,35 @@ class IndexedString(object):
         else:
             return self.string_start[[self.positions[id_]]]
 
-    def inverse_removing(self, words_to_remove):
+    def inverse_removing(self, list_of_words_to_remove):
         """Returns a string after removing the appropriate words.
 
         If self.bow is false, replaces word with UNKWORDZ instead of removing
         it.
 
         Args:
-            words_to_remove: list of ids (ints) to remove
+            words_to_remove: list of list of ids (ints) to remove
 
         Returns:
-            original raw string with appropriate words removed.
+            list of original raw string with appropriate words removed.
         """
-        mask = np.ones(self.as_np.shape[0], dtype='bool')
-        mask[self.__get_idxs(words_to_remove)] = False
-        if not self.bow:
-            return ''.join(
-                [self.as_list[i] if mask[i] else self.mask_string
-                 for i in range(mask.shape[0])])
-        return ''.join([self.as_list[v] for v in mask.nonzero()[0]])
+        masks = []
+        for words_to_remove in list_of_words_to_remove:
+            mask = np.ones(self.as_np.shape[0], dtype='bool')
+            mask[self.__get_idxs(words_to_remove)] = False
+            masks.append(mask)
+        if self.replacement_fn:
+            return self.replacement_fn(self.as_list, masks)
+        else:
+            inversed_data = []
+            for mask in masks:
+                if not self.bow:
+                    inversed_data.append(''.join(
+                        [self.as_list[i] if mask[i] else self.mask_string
+                         for i in range(mask.shape[0])]))
+                else:
+                   inversed_data.append(''.join([self.as_list[v] for v in mask.nonzero()[0]]))
+            return inversed_data
 
     @staticmethod
     def _segment_with_tokens(text, tokens):
@@ -368,6 +379,7 @@ class LimeTextExplainer(object):
     def explain_instance(self,
                          text_instance,
                          classifier_fn,
+                         replacement_fn=None,
                          labels=(1,),
                          top_labels=None,
                          num_features=10,
@@ -387,6 +399,11 @@ class LimeTextExplainer(object):
                 takes a list of d strings and outputs a (d, k) numpy array with
                 prediction probabilities, where k is the number of classes.
                 For ScikitClassifiers , this is classifier.predict_proba.
+            replacement_fn: A function which can be specified which defines a replacement strategy. Takes in a
+                list of strings representing the original text as a list (text_as_list: List[str]) and a list of integers
+                which represent which tokens were marked for removal (masks: List[List[int]]). Each List[int] in masks
+                represents one sampled item. Returns a List[str] where each item in List[str] is a modified version of
+                the original text. (By default no replacement is done and text is removed)
             labels: iterable with labels to be explained.
             top_labels: if not None, ignore labels and produce explanations for
                 the K labels with highest prediction probabilities, where K is
@@ -408,7 +425,8 @@ class LimeTextExplainer(object):
                           if self.char_level else
                           IndexedString(text_instance, bow=self.bow,
                                         split_expression=self.split_expression,
-                                        mask_string=self.mask_string))
+                                        mask_string=self.mask_string,
+                                        replacement_fn=replacement_fn))
         domain_mapper = TextDomainMapper(indexed_string)
         data, yss, distances = self.__data_labels_distances(
             indexed_string, classifier_fn, num_samples,
@@ -448,6 +466,11 @@ class LimeTextExplainer(object):
             classifier_fn: classifier prediction probability function, which
                 takes a string and outputs prediction probabilities. For
                 ScikitClassifier, this is classifier.predict_proba.
+            replacement_fn: A function which can be specified which defines a replacement strategy. Takes in a
+                list of strings representing the original text as a list (text_as_list: List[str]) and a list of integers
+                which represent which tokens were marked for removal (masks: List[List[int]]). Each List[int] in masks
+                represents one sampled item. Returns a List[str] where each item in List[str] is a modified version of
+                the original text. (By default no replacement is done and text is removed)
             num_samples: size of the neighborhood to learn the linear model
             distance_metric: the distance metric to use for sample weighting,
                 defaults to cosine similarity.
@@ -475,11 +498,14 @@ class LimeTextExplainer(object):
         data[0] = np.ones(doc_size)
         features_range = range(doc_size)
         inverse_data = [indexed_string.raw_string()]
+        inactive_strings = []
         for i, size in enumerate(sample, start=1):
             inactive = self.random_state.choice(features_range, size,
                                                 replace=False)
             data[i, inactive] = 0
-            inverse_data.append(indexed_string.inverse_removing(inactive))
+            inactive_strings.append(inactive)
+
+        inverse_data.extend(indexed_string.inverse_removing(inactive_strings))
         labels = classifier_fn(inverse_data)
         distances = distance_fn(sp.sparse.csr_matrix(data))
         return data, labels, distances
