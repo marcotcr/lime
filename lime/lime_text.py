@@ -13,7 +13,7 @@ from sklearn.utils import check_random_state
 
 from . import explanation
 from . import lime_base
-
+import math
 
 class TextDomainMapper(explanation.DomainMapper):
     """Maps feature ids to words or word-positions"""
@@ -493,7 +493,11 @@ class LimeTextExplainer(object):
                 x, x[0], metric=distance_metric).ravel() * 100
 
         doc_size = indexed_string.num_words()
-        sample = self.random_state.randint(1, doc_size + 1, num_samples - 1)
+        try:
+            no_replaces = self.random_state.randint(math.floor((doc_size + 1) / 4), math.floor((doc_size + 1) / 3))
+        except ValueError:
+            no_replaces = self.random_state.randint(1, doc_size + 1)
+        sample = [no_replaces for _ in range(num_samples - 1)]
         data = np.ones((num_samples, doc_size))
         data[0] = np.ones(doc_size)
         features_range = range(doc_size)
