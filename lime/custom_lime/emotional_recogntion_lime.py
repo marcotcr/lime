@@ -9,7 +9,8 @@ class ITLIME:
         self.text_explainer = lime_text.LimeTextExplainer()
         self.image_explainer = lime_image.LimeImageExplainer()
     
-    
-    
-    def predict(self,input:tuple):
+    def explain_instance(self,img,sentence):
+        pass
+
+    def predict(self,input):
         pass
