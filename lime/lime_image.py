@@ -30,8 +30,15 @@ class ImageExplanation(object):
         self.local_pred = {}
         self.score = {}
 
-    def get_image_and_mask(self, label, positive_only=True, negative_only=False, hide_rest=False,
-                           num_features=5, min_weight=0.):
+    def get_image_and_mask(
+        self,
+        label,
+        positive_only=True,
+        negative_only=False,
+        hide_rest=False,
+        num_features=5,
+        min_weight=0.0,
+    ):
         """Init function.
 
         Args:
@@ -53,9 +60,11 @@ class ImageExplanation(object):
             skimage.segmentation.mark_boundaries
         """
         if label not in self.local_exp:
-            raise KeyError('Label not in explanation')
+            raise KeyError("Label not in explanation")
         if positive_only & negative_only:
-            raise ValueError("Positive_only and negative_only cannot be true at the same time.")
+            raise ValueError(
+                "Positive_only and negative_only cannot be true at the same time."
+            )
         segments = self.segments
         image = self.image
         exp = self.local_exp[label]
@@ -65,11 +74,11 @@ class ImageExplanation(object):
         else:
             temp = self.image.copy()
         if positive_only:
-            fs = [x[0] for x in exp
-                  if x[1] > 0 and x[1] > min_weight][:num_features]
+            fs = [x[0] for x in exp if x[1] > 0 and x[1] > min_weight][:num_features]
         if negative_only:
-            fs = [x[0] for x in exp
-                  if x[1] < 0 and abs(x[1]) > min_weight][:num_features]
+            fs = [x[0] for x in exp if x[1] < 0 and abs(x[1]) > min_weight][
+                :num_features
+            ]
         if positive_only or negative_only:
             for f in fs:
                 temp[segments == f] = image[segments == f].copy()
@@ -95,8 +104,14 @@ class LimeImageExplainer(object):
     feature that is 1 when the value is the same as the instance being
     explained."""
 
-    def __init__(self, kernel_width=.25, kernel=None, verbose=False,
-                 feature_selection='auto', random_state=None):
+    def __init__(
+        self,
+        kernel_width=0.25,
+        kernel=None,
+        verbose=False,
+        feature_selection="auto",
+        random_state=None,
+    ):
         """Init function.
 
         Args:
@@ -117,24 +132,34 @@ class LimeImageExplainer(object):
         kernel_width = float(kernel_width)
 
         if kernel is None:
+
             def kernel(d, kernel_width):
-                return np.sqrt(np.exp(-(d ** 2) / kernel_width ** 2))
+                return np.sqrt(np.exp(-(d**2) / kernel_width**2))
 
         kernel_fn = partial(kernel, kernel_width=kernel_width)
 
         self.random_state = check_random_state(random_state)
         self.feature_selection = feature_selection
-        self.base = lime_base.LimeBase(kernel_fn, verbose, random_state=self.random_state)
+        self.base = lime_base.LimeBase(
+            kernel_fn, verbose, random_state=self.random_state
+        )
 
-    def explain_instance(self, image, classifier_fn, labels=(1,),
-                         hide_color=None,
-                         top_labels=5, num_features=100000, num_samples=1000,
-                         batch_size=10,
-                         segmentation_fn=None,
-                         distance_metric='cosine',
-                         model_regressor=None,
-                         random_seed=None,
-                         progress_bar=True):
+    def explain_instance(
+        self,
+        image,
+        classifier_fn,
+        labels=(1,),
+        hide_color=None,
+        top_labels=5,
+        num_features=100000,
+        num_samples=1000,
+        batch_size=10,
+        segmentation_fn=None,
+        distance_metric="cosine",
+        model_regressor=None,
+        random_seed=None,
+        progress_bar=True,
+    ):
         """Generates explanations for a prediction.
 
         First, we generate neighborhood data by randomly perturbing features
@@ -178,9 +203,13 @@ class LimeImageExplainer(object):
             random_seed = self.random_state.randint(0, high=1000)
 
         if segmentation_fn is None:
-            segmentation_fn = SegmentationAlgorithm('quickshift', kernel_size=4,
-                                                    max_dist=200, ratio=0.2,
-                                                    random_seed=random_seed)
+            segmentation_fn = SegmentationAlgorithm(
+                "quickshift",
+                kernel_size=4,
+                max_dist=200,
+                ratio=0.2,
+                random_seed=random_seed,
+            )
         segments = segmentation_fn(image)
 
         fudged_image = image.copy()
@@ -189,21 +218,25 @@ class LimeImageExplainer(object):
                 fudged_image[segments == x] = (
                     np.mean(image[segments == x][:, 0]),
                     np.mean(image[segments == x][:, 1]),
-                    np.mean(image[segments == x][:, 2]))
+                    np.mean(image[segments == x][:, 2]),
+                )
         else:
             fudged_image[:] = hide_color
 
         top = labels
 
-        data, labels = self.data_labels(image, fudged_image, segments,
-                                        classifier_fn, num_samples,
-                                        batch_size=batch_size,
-                                        progress_bar=progress_bar)
+        data, labels = self.data_labels(
+            image,
+            fudged_image,
+            segments,
+            classifier_fn,
+            num_samples,
+            batch_size=batch_size,
+            progress_bar=progress_bar,
+        )
 
         distances = sklearn.metrics.pairwise_distances(
-            data,
-            data[0].reshape(1, -1),
-            metric=distance_metric
+            data, data[0].reshape(1, -1), metric=distance_metric
         ).ravel()
 
         ret_exp = ImageExplanation(image, segments)
@@ -212,23 +245,95 @@ class LimeImageExplainer(object):
             ret_exp.top_labels = list(top)
             ret_exp.top_labels.reverse()
         for label in top:
-            (ret_exp.intercept[label],
-             ret_exp.local_exp[label],
-             ret_exp.score[label],
-             ret_exp.local_pred[label]) = self.base.explain_instance_with_data(
-                data, labels, distances, label, num_features,
+            (
+                ret_exp.intercept[label],
+                ret_exp.local_exp[label],
+                ret_exp.score[label],
+                ret_exp.local_pred[label],
+            ) = self.base.explain_instance_with_data(
+                data,
+                labels,
+                distances,
+                label,
+                num_features,
                 model_regressor=model_regressor,
-                feature_selection=self.feature_selection)
+                feature_selection=self.feature_selection,
+            )
         return ret_exp
 
-    def data_labels(self,
-                    image,
-                    fudged_image,
-                    segments,
-                    classifier_fn,
-                    num_samples,
-                    batch_size=10,
-                    progress_bar=True):
+    def explain_instance_with_pred(
+        self,
+        image,
+        pred,
+        labels=(1,),
+        hide_color=None,
+        top_labels=5,
+        num_features=100000,
+        num_samples=1000,
+        batch_size=10,
+        segmentation_fn=None,
+        distance_metric="cosine",
+        model_regressor=None,
+        random_seed=None,
+        progress_bar=True,
+    ):
+        if len(image.shape) == 2:
+            image = gray2rgb(image)
+        if random_seed is None:
+            random_seed = self.random_state.randint(0, high=1000)
+
+        if segmentation_fn is None:
+            segmentation_fn = SegmentationAlgorithm(
+                "quickshift",
+                kernel_size=4,
+                max_dist=200,
+                ratio=0.2,
+                random_seed=random_seed,
+            )
+        segments = segmentation_fn(image)
+
+        top = labels
+
+        data, imgs = self.generate_imgs(
+            image, segments, num_samples, progress_bar=progress_bar
+        )
+
+        distances = sklearn.metrics.pairwise_distances(
+            data, data[0].reshape(1, -1), metric=distance_metric
+        ).ravel()
+
+        ret_exp = ImageExplanation(image, segments)
+        if top_labels:
+            top = np.argsort(labels[0])[-top_labels:]
+            ret_exp.top_labels = list(top)
+            ret_exp.top_labels.reverse()
+        for label in top:
+            (
+                ret_exp.intercept[label],
+                ret_exp.local_exp[label],
+                ret_exp.score[label],
+                ret_exp.local_pred[label],
+            ) = self.base.explain_instance_with_data(
+                data,
+                labels,
+                distances,
+                label,
+                num_features,
+                model_regressor=model_regressor,
+                feature_selection=self.feature_selection,
+            )
+        return ret_exp
+
+    def data_labels(
+        self,
+        image,
+        fudged_image,
+        segments,
+        classifier_fn,
+        num_samples,
+        batch_size=10,
+        progress_bar=True,
+    ):
         """Generates images and predictions in the neighborhood of this image.
 
         Args:
@@ -248,8 +353,9 @@ class LimeImageExplainer(object):
                 labels: prediction probabilities matrix
         """
         n_features = np.unique(segments).shape[0]
-        data = self.random_state.randint(0, 2, num_samples * n_features)\
-            .reshape((num_samples, n_features))
+        data = self.random_state.randint(0, 2, num_samples * n_features).reshape(
+            (num_samples, n_features)
+        )
         labels = []
         data[0, :] = 1
         imgs = []
@@ -270,3 +376,35 @@ class LimeImageExplainer(object):
             preds = classifier_fn(np.array(imgs))
             labels.extend(preds)
         return data, np.array(labels)
+
+    def generate_imgs(
+        self, image, segments, num_samples, hide_color=None, progress_bar=True
+    ):
+
+        fudged_image = image.copy()
+        if hide_color is None:
+            for x in np.unique(segments):
+                fudged_image[segments == x] = (
+                    np.mean(image[segments == x][:, 0]),
+                    np.mean(image[segments == x][:, 1]),
+                    np.mean(image[segments == x][:, 2]),
+                )
+        else:
+            fudged_image[:] = hide_color
+
+        n_features = np.unique(segments).shape[0]
+        data = self.random_state.randint(0, 2, num_samples * n_features).reshape(
+            (num_samples, n_features)
+        )
+        data[0, :] = 1
+        imgs = []
+        rows = tqdm(data) if progress_bar else data
+        for row in rows:
+            temp = copy.deepcopy(image)
+            zeros = np.where(row == 0)[0]
+            mask = np.zeros(segments.shape).astype(bool)
+            for z in zeros:
+                mask[segments == z] = True
+            temp[mask] = fudged_image[mask]
+            imgs.append(temp)
+        return data, np.array(imgs)
