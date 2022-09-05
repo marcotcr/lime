@@ -111,7 +111,6 @@ class LimeImageExplainer(object):
         verbose=False,
         feature_selection="auto",
         random_state=None,
-        random_seed=None
     ):
         """Init function.
 
@@ -144,8 +143,7 @@ class LimeImageExplainer(object):
         self.base = LimeBase(
             kernel_fn, verbose, random_state=self.random_state
         )
-        if random_seed is None:
-            self.random_seed = self.random_state.randint(0, high=1000)
+        self.random_seed = self.random_state.randint(0, high=1000)
 
     def explain_instance(
         self,
@@ -201,8 +199,6 @@ class LimeImageExplainer(object):
         """
         if len(image.shape) == 2:
             image = gray2rgb(image)
-        if self.random_seed is None:
-            self.random_seed = self.random_state.randint(0, high=1000)
 
         if segmentation_fn is None:
             segmentation_fn = SegmentationAlgorithm(
