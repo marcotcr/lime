@@ -1,5 +1,5 @@
 import types
-from lime.utils.generic_utils import has_arg
+from utils.generic_utils import has_arg
 from skimage.segmentation import felzenszwalb, slic, quickshift
 
 

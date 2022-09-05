@@ -8,7 +8,7 @@ import json
 import string
 import numpy as np
 
-from .exceptions import LimeError
+from exceptions import LimeError
 
 from sklearn.utils import check_random_state
 

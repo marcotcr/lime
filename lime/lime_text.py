@@ -11,11 +11,11 @@ import scipy as sp
 import sklearn
 from sklearn.utils import check_random_state
 
-from . import explanation
-from . import lime_base
+from explanation import DomainMapper,Explanation
+from lime_base import LimeBase
 
 
-class TextDomainMapper(explanation.DomainMapper):
+class TextDomainMapper(DomainMapper):
     """Maps feature ids to words or word-positions"""
 
     def __init__(self, indexed_string):
@@ -391,7 +391,7 @@ class LimeTextExplainer(object):
         kernel_fn = partial(kernel, kernel_width=kernel_width)
 
         self.random_state = check_random_state(random_state)
-        self.base = lime_base.LimeBase(
+        self.base = LimeBase(
             kernel_fn, verbose, random_state=self.random_state
         )
         self.class_names = class_names
@@ -458,7 +458,7 @@ class LimeTextExplainer(object):
         )
         if self.class_names is None:
             self.class_names = [str(x) for x in range(labels[0].shape[0])]
-        ret_exp = explanation.Explanation(
+        ret_exp = Explanation(
             domain_mapper=domain_mapper,
             class_names=self.class_names,
             random_state=self.random_state,
@@ -501,7 +501,6 @@ class LimeTextExplainer(object):
             IndexedCharacters(text_instance, bow=self.bow, mask_string=self.mask_string)
             if self.char_level
             else IndexedString(
-                text_instance,
                 bow=self.bow,
                 split_expression=self.split_expression,
                 mask_string=self.mask_string,
@@ -515,7 +514,7 @@ class LimeTextExplainer(object):
         # labels = pred
         if self.class_names is None:
             self.class_names = [str(x) for x in range(labels[0].shape[0])]
-        ret_exp = explanation.Explanation(
+        ret_exp = Explanation(
             domain_mapper=domain_mapper,
             class_names=self.class_names,
             random_state=self.random_state,
