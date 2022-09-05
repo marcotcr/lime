@@ -11,8 +11,8 @@ from skimage.color import gray2rgb
 from tqdm.auto import tqdm
 
 
-from . import lime_base
-from .wrappers.scikit_image import SegmentationAlgorithm
+from lime_base import LimeBase
+from wrappers.scikit_image import SegmentationAlgorithm
 
 
 class ImageExplanation(object):
@@ -111,6 +111,7 @@ class LimeImageExplainer(object):
         verbose=False,
         feature_selection="auto",
         random_state=None,
+        random_seed=None
     ):
         """Init function.
 
@@ -140,9 +141,11 @@ class LimeImageExplainer(object):
 
         self.random_state = check_random_state(random_state)
         self.feature_selection = feature_selection
-        self.base = lime_base.LimeBase(
+        self.base = LimeBase(
             kernel_fn, verbose, random_state=self.random_state
         )
+        if random_seed is None:
+            self.random_seed = self.random_state.randint(0, high=1000)
 
     def explain_instance(
         self,
@@ -157,7 +160,6 @@ class LimeImageExplainer(object):
         segmentation_fn=None,
         distance_metric="cosine",
         model_regressor=None,
-        random_seed=None,
         progress_bar=True,
     ):
         """Generates explanations for a prediction.
@@ -199,8 +201,8 @@ class LimeImageExplainer(object):
         """
         if len(image.shape) == 2:
             image = gray2rgb(image)
-        if random_seed is None:
-            random_seed = self.random_state.randint(0, high=1000)
+        if self.random_seed is None:
+            self.random_seed = self.random_state.randint(0, high=1000)
 
         if segmentation_fn is None:
             segmentation_fn = SegmentationAlgorithm(
@@ -208,7 +210,7 @@ class LimeImageExplainer(object):
                 kernel_size=4,
                 max_dist=200,
                 ratio=0.2,
-                random_seed=random_seed,
+                random_seed=self.random_seed,
             )
         segments = segmentation_fn(image)
 
@@ -279,8 +281,8 @@ class LimeImageExplainer(object):
     ):
         if len(image.shape) == 2:
             image = gray2rgb(image)
-        if random_seed is None:
-            random_seed = self.random_state.randint(0, high=1000)
+        if self.random_seed is None:
+            self.random_seed = self.random_state.randint(0, high=1000)
 
         if segmentation_fn is None:
             segmentation_fn = SegmentationAlgorithm(
@@ -288,7 +290,7 @@ class LimeImageExplainer(object):
                 kernel_size=4,
                 max_dist=200,
                 ratio=0.2,
-                random_seed=random_seed,
+                random_seed=self.random_seed,
             )
         segments = segmentation_fn(image)
 
@@ -384,10 +386,11 @@ class LimeImageExplainer(object):
         fudged_image = image.copy()
         if hide_color is None:
             for x in np.unique(segments):
-                fudged_image[segments == x] = (
-                    np.mean(image[segments == x][:, 0]),
-                    np.mean(image[segments == x][:, 1]),
-                    np.mean(image[segments == x][:, 2]),
+                mask = segments == x
+                fudged_image[mask] = (
+                    np.mean(image[mask][:, 0]),
+                    np.mean(image[mask][:, 1]),
+                    np.mean(image[mask][:, 2]),
                 )
         else:
             fudged_image[:] = hide_color
@@ -408,3 +411,13 @@ class LimeImageExplainer(object):
             temp[mask] = fudged_image[mask]
             imgs.append(temp)
         return data, np.array(imgs)
+
+    def get_segments(self,image):
+        segmentation_fn = SegmentationAlgorithm(
+                "quickshift",
+                kernel_size=4,
+                max_dist=200,
+                ratio=0.2,
+                random_seed=self.random_seed,
+            )
+        return segmentation_fn(image)
