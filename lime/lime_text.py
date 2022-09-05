@@ -606,11 +606,3 @@ class LimeTextExplainer(object):
             data[i, inactive] = 0
             inverse_data.append(indexed_string.inverse_removing(inactive))
         return data, inverse_data
-
-    def calc_dist(self, x, distance_metric):
-        return (
-            sklearn.metrics.pairwise.pairwise_distances(
-                x, x[0], metric=distance_metric
-            ).ravel()
-            * 100
-        )
