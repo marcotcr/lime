@@ -1,7 +1,9 @@
 import numpy as np
 from skimage.io import imread
+from skimage.segmentation import mark_boundaries
 import sklearn
 from sklearn.utils import check_random_state
+from explanation import Explanation
 from lime_base import LimeBase
 from lime_text import (
     IndexedCharacters,
@@ -12,9 +14,7 @@ from lime_text import (
 from lime_image import ImageExplanation, LimeImageExplainer
 import matplotlib.pyplot as plt
 from functools import partial
-from skimage.segmentation import mark_boundaries
 import scipy as sp
-
 
 class ITLIME:
     """
@@ -23,6 +23,7 @@ class ITLIME:
 
     def __init__(
         self,
+        class_names,
         kernel_width=0.25,
         kernel=None,
         feature_selection="auto",
@@ -34,8 +35,8 @@ class ITLIME:
         bow=True,
         mask_string=None,
         char_level=False,
-        class_names=None,
     ) -> None:
+
         self.text_explainer = LimeTextExplainer()
         self.image_explainer = LimeImageExplainer()
         kernel_width = float(kernel_width)
@@ -61,15 +62,25 @@ class ITLIME:
         self.split_expression = split_expression
         self.char_level = char_level
 
-    def calc_dist(self, x, metric="cosine"):
-        return sklearn.metrics.pairwise.pairwise_distances(
-            x, x[0], metric=metric
+    def __calc_dist__text(self, data, metric="cosine"):
+        data = sp.sparse.csr_matrix(data)
+        return (
+            sklearn.metrics.pairwise.pairwise_distances(
+                data, data[0], metric=metric
+            ).ravel()
+            * 100
+        )
+
+    def __calc_dist__img(self, data, metric="cosine"):
+        return sklearn.metrics.pairwise_distances(
+            data, data[0].reshape(1, -1), metric=metric
         ).ravel()
 
     def explain_instance(
         self,
         img,
         sentence,
+        predict_fun,
         num_features=100000,
         num_samples=15,
         top_labels=5,
@@ -79,7 +90,7 @@ class ITLIME:
     ):
         sentence = text_preprocessing(sentence) if text_preprocessing else sentence
         img = image_preprocessing(img) if image_preprocessing else img
-        
+
         indexed_string = (
             IndexedCharacters(sentence, bow=self.bow, mask_string=self.mask_string)
             if self.char_level
@@ -94,25 +105,50 @@ class ITLIME:
         text_data, sentences = self.text_explainer.generat_text_data(
             indexed_string, num_samples
         )
-        text_distances = self.calc_dist(sp.sparse.csr_matrix(text_data)) * 100
+        text_distances = self.__calc_dist__text(text_data)
 
         segments = self.image_explainer.get_segments(img)
         imgs_data, imgs = self.image_explainer.generate_imgs(img, segments, num_samples)
-        image_distances = self.calc_dist(imgs_data)
+        image_distances = self.__calc_dist__img(imgs_data)
 
-        labels = np.random.random((num_samples, 3))
+        labels = predict_fun(imgs,sentences)
 
-        ret_exp = ImageExplanation(img, segments)
+        img_exp = ImageExplanation(img, segments)
+        text_exp = Explanation(
+            domain_mapper=domain_mapper,
+            class_names=self.class_names,
+            random_state=self.random_state,
+        )
+        text_exp.predict_proba = labels[0]
         if top_labels:
             top = np.argsort(labels[0])[-top_labels:]
-            ret_exp.top_labels = list(top)
-            ret_exp.top_labels.reverse()
+            text_exp.top_labels = list(top)
+            text_exp.top_labels.reverse()
+            img_exp.top_labels = list(top)
+            img_exp.top_labels.reverse()
+
         for label in top:
             (
-                ret_exp.intercept[label],
-                ret_exp.local_exp[label],
-                ret_exp.score[label],
-                ret_exp.local_pred[label],
+                text_exp.intercept[label],
+                text_exp.local_exp[label],
+                text_exp.score[label],
+                text_exp.local_pred[label],
+            ) = self.base.explain_instance_with_data(
+                text_data,
+                labels,
+                text_distances,
+                label,
+                num_features,
+                model_regressor=model_regressor,
+                feature_selection=self.feature_selection,
+            )
+
+        for label in top:
+            (
+                img_exp.intercept[label],
+                img_exp.local_exp[label],
+                img_exp.score[label],
+                img_exp.local_pred[label],
             ) = self.base.explain_instance_with_data(
                 imgs_data,
                 labels,
@@ -122,15 +158,6 @@ class ITLIME:
                 model_regressor=model_regressor,
                 feature_selection=self.feature_selection,
             )
-        temp, mask = ret_exp.get_image_and_mask(ret_exp.top_labels[0], positive_only=True, num_features=5, hide_rest=False)
-        plt.imshow(mark_boundaries(temp , mask))
-        # _, axs = plt.subplots(2, 2, figsize=(12, 12))
-        # axs = axs.flatten()
-        # for ax, img in zip(axs, imgs):
-        #     ax.imshow(img)
-        # plt.show()
-
-    def predict(self, input):
-        pass
+        return img_exp, text_exp
 
 
