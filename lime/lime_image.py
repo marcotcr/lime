@@ -263,69 +263,6 @@ class LimeImageExplainer(object):
             )
         return ret_exp
 
-    def explain_instance_with_pred(
-        self,
-        image,
-        pred,
-        labels=(1,),
-        hide_color=None,
-        top_labels=5,
-        num_features=100000,
-        num_samples=1000,
-        batch_size=10,
-        segmentation_fn=None,
-        distance_metric="cosine",
-        model_regressor=None,
-        random_seed=None,
-        progress_bar=True,
-    ):
-        if len(image.shape) == 2:
-            image = gray2rgb(image)
-        if self.random_seed is None:
-            self.random_seed = self.random_state.randint(0, high=1000)
-
-        if segmentation_fn is None:
-            segmentation_fn = SegmentationAlgorithm(
-                "quickshift",
-                kernel_size=4,
-                max_dist=200,
-                ratio=0.2,
-                random_seed=self.random_seed,
-            )
-        segments = segmentation_fn(image)
-
-        top = labels
-
-        data, imgs = self.generate_imgs(
-            image, segments, num_samples, progress_bar=progress_bar
-        )
-
-        distances = sklearn.metrics.pairwise_distances(
-            data, data[0].reshape(1, -1), metric=distance_metric
-        ).ravel()
-
-        ret_exp = ImageExplanation(image, segments)
-        if top_labels:
-            top = np.argsort(labels[0])[-top_labels:]
-            ret_exp.top_labels = list(top)
-            ret_exp.top_labels.reverse()
-        for label in top:
-            (
-                ret_exp.intercept[label],
-                ret_exp.local_exp[label],
-                ret_exp.score[label],
-                ret_exp.local_pred[label],
-            ) = self.base.explain_instance_with_data(
-                data,
-                labels,
-                distances,
-                label,
-                num_features,
-                model_regressor=model_regressor,
-                feature_selection=self.feature_selection,
-            )
-        return ret_exp
-
     def data_labels(
         self,
         image,

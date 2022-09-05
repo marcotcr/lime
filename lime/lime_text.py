@@ -485,62 +485,6 @@ class LimeTextExplainer(object):
             )
         return ret_exp
 
-    def explain_instance_with_pred(
-        self,
-        text_instance,
-        pred,
-        labels=(1,),
-        top_labels=None,
-        num_features=10,
-        num_samples=5000,
-        distance_metric="cosine",
-        model_regressor=None,
-    ):
-
-        indexed_string = (
-            IndexedCharacters(text_instance, bow=self.bow, mask_string=self.mask_string)
-            if self.char_level
-            else IndexedString(
-                bow=self.bow,
-                split_expression=self.split_expression,
-                mask_string=self.mask_string,
-            )
-        )
-        domain_mapper = TextDomainMapper(indexed_string)
-        data, inv_data = self.generat_text_data(indexed_string, num_samples)
-        distances = self.calc_dist(
-            sp.sparse.csr_matrix(data), distance_metric=distance_metric
-        )
-        # labels = pred
-        if self.class_names is None:
-            self.class_names = [str(x) for x in range(labels[0].shape[0])]
-        ret_exp = Explanation(
-            domain_mapper=domain_mapper,
-            class_names=self.class_names,
-            random_state=self.random_state,
-        )
-        ret_exp.predict_proba = labels[0]
-        if top_labels:
-            labels = np.argsort(labels[0])[-top_labels:]
-            ret_exp.top_labels = list(labels)
-            ret_exp.top_labels.reverse()
-        for label in labels:
-            (
-                ret_exp.intercept[label],
-                ret_exp.local_exp[label],
-                ret_exp.score[label],
-                ret_exp.local_pred[label],
-            ) = self.base.explain_instance_with_data(
-                data,
-                labels,
-                distances,
-                label,
-                num_features,
-                model_regressor=model_regressor,
-                feature_selection=self.feature_selection,
-            )
-        return ret_exp
-
     def __data_labels_distances(
         self, indexed_string, classifier_fn, num_samples, distance_metric="cosine"
     ):
