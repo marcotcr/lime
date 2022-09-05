@@ -161,3 +161,26 @@ class ITLIME:
         return img_exp, text_exp
 
 
+# Just For Testing !!!!
+def pred(imgs,sentences):
+    labels = np.random.random((len(imgs), 3))
+    return labels
+
+# Just For Testing !!!!
+if __name__ == "__main__":
+    image_path = "../../man5.jpg"
+    sentenct = "Happy Smiley Face Man In Blue Suit With White Background"
+    CLASS_NAMES = ["Positive", "Negative", "Neutral"]
+    image_text_lime = ITLIME(class_names=CLASS_NAMES)
+    img = imread(image_path)
+    img_exp, text_exp = image_text_lime.explain_instance(
+        img,
+        sentenct,
+        predict_fun=pred,
+        num_samples=15,
+    )
+    fig = text_exp.as_pyplot_figure(0)
+    plt.figure()
+    temp_img, mask = img_exp.get_image_and_mask(img_exp.top_labels[0])
+    plt.imshow(mark_boundaries(temp_img,mask))
+    plt.show()
