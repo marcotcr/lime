@@ -140,9 +140,7 @@ class LimeImageExplainer(object):
 
         self.random_state = check_random_state(random_state)
         self.feature_selection = feature_selection
-        self.base = LimeBase(
-            kernel_fn, verbose, random_state=self.random_state
-        )
+        self.base = LimeBase(kernel_fn, verbose, random_state=self.random_state)
         self.random_seed = self.random_state.randint(0, high=1000)
 
     def explain_instance(
@@ -315,7 +313,19 @@ class LimeImageExplainer(object):
     def generate_imgs(
         self, image, segments, num_samples, hide_color=None, progress_bar=True
     ):
+        """Generate New Images to Make Prediections on.
 
+        Args:
+            image (numpy.ndarray): 3D (RGB) Image.
+            segments (numpy.ndarray): see get_segments fun.
+            num_samples (int): size of the neighborhood to learn the linear model
+            hide_color (int, optional): If not None, will hide superpixels with this color.
+                Otherwise, use the mean pixel color of the image. Defaults to None.
+            progress_bar (bool, optional): if True, show tqdm progress bar. Defaults to True.
+
+        Returns:
+            tuple: data, imgs
+        """
         fudged_image = image.copy()
         if hide_color is None:
             for x in np.unique(segments):
@@ -345,12 +355,35 @@ class LimeImageExplainer(object):
             imgs.append(temp)
         return data, np.array(imgs)
 
-    def get_segments(self,image):
+    def get_segments(
+        self, image, algo_type="quickshift", kernel_size=4, max_dist=200, ratio=0.2
+    ):
+        """Segment The Image Into Parts
+
+        Args:
+            image (numpy.ndarray): 3D (RGB) Image.
+
+            algo_type (str, optional): segmentation algorithm among the following:
+
+            'quickshift', 'slic', 'felzenszwalb'. Defaults to "quickshift".
+
+            kernel_size (int, optional): Defaults to 4.
+
+            max_dist (int, optional): Defaults to 200.
+
+            ratio (float, optional): Defaults to 0.2.
+
+            algorithm parameters (valid model paramters
+            as define in Scikit-Image documentation)
+
+        Returns:
+            segments: numpy.ndarray
+        """
         segmentation_fn = SegmentationAlgorithm(
-                "quickshift",
-                kernel_size=4,
-                max_dist=200,
-                ratio=0.2,
-                random_seed=self.random_seed,
-            )
+            algo_type,
+            kernel_size,
+            max_dist,
+            ratio,
+            random_seed=self.random_seed,
+        )
         return segmentation_fn(image)
