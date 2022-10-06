@@ -359,6 +359,8 @@ class LimeTabularExplainer(object):
         ).ravel()
 
         yss = predict_fn(inverse)
+        if not isinstance(yss, np.ndarray): #pytorch output
+            yss = yss.detach().numpy() 
 
         # for classification, the model needs to provide a list of tuples - classes
         # along with prediction probabilities
