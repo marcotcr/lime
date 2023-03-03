@@ -507,7 +507,6 @@ class LimeTabularExplainer(object):
         else:
             num_cols = data_row.shape[0]
             data = np.zeros((num_samples, num_cols))
-        categorical_features = range(num_cols)
         if self.discretizer is None:
             instance_sample = data_row
             scale = self.scaler.scale_
