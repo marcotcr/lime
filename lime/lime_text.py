@@ -481,5 +481,10 @@ class LimeTextExplainer(object):
             data[i, inactive] = 0
             inverse_data.append(indexed_string.inverse_removing(inactive))
         labels = classifier_fn(inverse_data)
+
+        # if labels are a sparse matrix, convert to a dense array
+        if sp.sparse.issparse(labels):
+            labels = labels.toarray()
+            
         distances = distance_fn(sp.sparse.csr_matrix(data))
         return data, labels, distances
