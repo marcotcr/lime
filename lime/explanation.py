@@ -7,6 +7,7 @@ import os.path
 import json
 import string
 import numpy as np
+import re
 
 from .exceptions import LimeError
 
@@ -186,6 +187,7 @@ class Explanation(object):
                          labels=None,
                          predict_proba=True,
                          show_predicted_value=True,
+                         dark_mode=False,
                          **kwargs):
         """Shows html explanation in ipython notebook.
 
@@ -196,6 +198,7 @@ class Explanation(object):
         display(HTML(self.as_html(labels=labels,
                                   predict_proba=predict_proba,
                                   show_predicted_value=show_predicted_value,
+                                  dark_mode=dark_mode,
                                   **kwargs)))
 
     def save_to_file(self,
@@ -223,6 +226,7 @@ class Explanation(object):
                 labels=None,
                 predict_proba=True,
                 show_predicted_value=True,
+                dark_mode=False,
                 **kwargs):
         """Returns the explanation as an html page.
 
@@ -231,10 +235,13 @@ class Explanation(object):
                 If you ask for a label for which an explanation wasn't
                 computed, will throw an exception. If None, will show
                 explanations for all available labels. (only used for classification)
-            predict_proba: if true, add  barchart with prediction probabilities
+            predict_proba: if true, add barchart with prediction probabilities
                 for the top classes. (only used for classification)
-            show_predicted_value: if true, add  barchart with expected value
+            show_predicted_value: if true, add barchart with expected value
                 (only used for regression)
+            dark_mode: if true, updates all text color to white in the resulting HTML
+                (only useful when using show_in_notebook() from a notebook rendered
+                in dark mode)
             kwargs: keyword arguments, passed to domain_mapper
 
         Returns:
@@ -323,5 +330,10 @@ class Explanation(object):
         </script>
         ''' % (random_id, predict_proba_js, predict_value_js, exp_js, raw_js)
         out += u'</body></html>'
+
+        if (dark_mode):
+            out = out.replace("\"black\"", "\"white\"")
+            out = out.replace("all: initial;", "all: initial; color: white;")
+            out = re.sub(r"svg.append\('text(((?!fill).)*);", r"svg.append('text\1.style('fill', 'white');", out)
 
         return out
