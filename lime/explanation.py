@@ -150,7 +150,7 @@ class Explanation(object):
         """
         return self.local_exp
 
-    def as_pyplot_figure(self, label=1, figsize=(4,4), **kwargs):
+    def as_pyplot_figure(self, label=1, figsize=(4,4), dpi=100, **kwargs):
         """Returns the explanation as a pyplot figure.
 
         Will throw an error if you don't have matplotlib installed
@@ -160,13 +160,13 @@ class Explanation(object):
                    Will be ignored for regression explanations.
             figsize: desired size of pyplot in tuple format, defaults to (4,4).
             kwargs: keyword arguments, passed to domain_mapper
-
+            dpi: desired DPI(Dots per Inch) of pyplot in integer, default to 100.
         Returns:
             pyplot figure (barchart).
         """
         import matplotlib.pyplot as plt
         exp = self.as_list(label=label, **kwargs)
-        fig = plt.figure(figsize=figsize)
+        fig = plt.figure(figsize=figsize, dpi=dpi)
         vals = [x[1] for x in exp]
         names = [x[0] for x in exp]
         vals.reverse()
