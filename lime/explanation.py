@@ -186,6 +186,7 @@ class Explanation(object):
                          labels=None,
                          predict_proba=True,
                          show_predicted_value=True,
+                         col_b = "#ffffff",
                          **kwargs):
         """Shows html explanation in ipython notebook.
 
@@ -196,6 +197,7 @@ class Explanation(object):
         display(HTML(self.as_html(labels=labels,
                                   predict_proba=predict_proba,
                                   show_predicted_value=show_predicted_value,
+                                  col_b=col_b,
                                   **kwargs)))
 
     def save_to_file(self,
@@ -203,6 +205,7 @@ class Explanation(object):
                      labels=None,
                      predict_proba=True,
                      show_predicted_value=True,
+                     col_b = "#ffffff",
                      **kwargs):
         """Saves html explanation to file. .
 
@@ -216,6 +219,7 @@ class Explanation(object):
         file_.write(self.as_html(labels=labels,
                                  predict_proba=predict_proba,
                                  show_predicted_value=show_predicted_value,
+                                 col_b=col_b,
                                  **kwargs))
         file_.close()
 
@@ -223,6 +227,7 @@ class Explanation(object):
                 labels=None,
                 predict_proba=True,
                 show_predicted_value=True,
+                col_b='#ffffff',
                 **kwargs):
         """Returns the explanation as an html page.
 
@@ -235,6 +240,7 @@ class Explanation(object):
                 for the top classes. (only used for classification)
             show_predicted_value: if true, add  barchart with expected value
                 (only used for regression)
+            col_b: background color for the plot
             kwargs: keyword arguments, passed to domain_mapper
 
         Returns:
@@ -251,9 +257,18 @@ class Explanation(object):
         bundle = open(os.path.join(this_dir, 'bundle.js'),
                       encoding="utf8").read()
 
-        out = u'''<html>
+        out = u'''<!DOCTYPE html>
+        <html>
+        <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF8">
-        <head><script>%s </script></head><body>''' % bundle
+            <style>
+                .lime {{
+                    background-color: {0} !important;  /* Change this to your preferred color */
+                }}
+            </style>
+            <script>{1} </script>
+        </head>
+        <body>'''.format(col_b, bundle) 
         random_id = id_generator(size=15, random_state=check_random_state(self.random_state))
         out += u'''
         <div class="lime top_div" id="top_div%s"></div>
