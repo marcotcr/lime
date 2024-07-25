@@ -7,7 +7,7 @@ from functools import partial
 import numpy as np
 import sklearn
 from sklearn.utils import check_random_state
-from skimage.color import gray2rgb
+from skimage.color import gray2rgb, rgb2gray
 from tqdm.auto import tqdm
 
 
@@ -261,7 +261,7 @@ class LimeImageExplainer(object):
             for z in zeros:
                 mask[segments == z] = True
             temp[mask] = fudged_image[mask]
-            imgs.append(temp)
+            imgs.append(rgb2gray(temp).reshape(temp.shape[0], temp.shape[1], 1))
             if len(imgs) == batch_size:
                 preds = classifier_fn(np.array(imgs))
                 labels.extend(preds)
