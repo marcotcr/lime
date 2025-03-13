@@ -192,7 +192,7 @@ class Explanation(object):
         See as_html() for parameters.
         This will throw an error if you don't have IPython installed"""
 
-        from IPython.core.display import display, HTML
+        from IPython.display import display, HTML
         display(HTML(self.as_html(labels=labels,
                                   predict_proba=predict_proba,
                                   show_predicted_value=show_predicted_value,
