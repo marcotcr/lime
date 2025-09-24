@@ -51,6 +51,14 @@ Negative (blue) words indicate atheism, while positive (orange) words indicate c
 
 <img src="https://raw.githubusercontent.com/marcotcr/lime/master/doc/images/images.png" width=200 />
 
+This image visually explains why the model predicted ‘cat’.
+
+Positive contribution pixels (green): Regions that are important for predicting the cat class. In the image, the cat’s body and face are highlighted.
+
+Negative contribution pixels (red): Regions that decrease the probability of the cat class. In the image, part of a dog’s face and body are included.
+
+LIME divides the input image into small regions (superpixels) and measures how the model’s output changes when each region is removed or altered.
+
 ## Tutorials and API
 
 For example usage for text classifiers, take a look at the following two tutorials (generated from ipython notebooks):
