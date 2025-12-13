@@ -1,0 +1,81 @@
+#!/Users/noyuritsuji/lime_jp/venv/bin/python3.11
+
+# -*- coding: utf-8 -*-
+
+# Copyright 2015 moco_beta
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+from janome.tokenizer import Tokenizer
+from janome.version import JANOME_VERSION
+from argparse import ArgumentParser
+import sys
+import subprocess
+
+import signal
+
+
+def signal_handler(signal, frame):
+    sys.exit(0)
+
+
+signal.signal(signal.SIGINT, signal_handler)
+
+
+def main():
+    parser = ArgumentParser()
+    parser.add_argument("-e", "--enc", dest="enc", default="utf8", help="Input encoding. Default is 'utf8'")
+    parser.add_argument("--udic", dest="udic", default="", help="Path to user dictionary file")
+    parser.add_argument("--udic-enc", dest="udic_enc", default="utf8",
+                        help="User dictionary encoding. Default is 'utf8'")
+    parser.add_argument("--udic-type", dest="udic_type", default="ipadic",
+                        help="User dictionary type, 'ipadic' or 'simpledic.' Default is 'ipadic'")
+    parser.add_argument("-g", "--graphviz", dest="graphviz", nargs='?', const=True,
+                        default=False, help="Output visualized lattice graph by Graphviz")
+    parser.add_argument("--gv-out", dest="gv_out", default="lattice.gv",
+                        help="Graphviz output file path. This option is used with -g or --graphviz")
+    parser.add_argument("--gv-format", dest="gv_format", default="png",
+                        help="Graphviz output format. default is 'png'. This option is used with -g or --graphviz. See https://graphviz.gitlab.io/_pages/doc/info/output.html for the supported formats.")
+    parser.add_argument('--version', action="version", version="janome {}".format(JANOME_VERSION))
+    args = parser.parse_args()
+
+    t = Tokenizer(udic=args.udic,
+                  udic_enc=args.udic_enc,
+                  udic_type=args.udic_type)
+    dotfile = args.gv_out if args.graphviz else ''
+    while True:
+        try:
+            line = input()
+            for token in t.tokenize(line, dotfile=dotfile):
+                print(token)
+        except EOFError:
+            break
+
+    if args.graphviz:
+        generate_graph(dotfile, args.gv_format)
+
+
+def generate_graph(dotfile, gv_format):
+    format_opt = '-T%s' % gv_format
+    output = '%s.%s' % (dotfile, gv_format)
+    output_opt = '-o%s' % output
+    gv_rc = subprocess.call(['dot', format_opt, output_opt, dotfile])
+    if gv_rc != 0:
+        sys.stderror.write('Something wrong with executing dot command. Maybe Graphviz is not installed?\n')
+        sys.exit(1)
+    print('Graph was successfully output to %s' % output)
+
+
+if __name__ == '__main__':
+    main()

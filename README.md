@@ -84,6 +84,22 @@ The raw (non-html) notebooks for these tutorials are available [here](https://gi
 
 The API reference is available [here](https://lime-ml.readthedocs.io/en/latest/).
 
+## Japanese text tokenization (Sudachi)
+
+For Japanese (`lang='jp'`) tokenization, this fork uses Sudachi to avoid external MeCab/UniDic setup.
+
+- Install SudachiPy:
+  - `pip install sudachipy`
+- Install a dictionary (if not already bundled via your Sudachi distribution):
+  - Core dictionary: `pip install sudachidict_core`
+- Usage:
+  - `explainer = LimeTextExplainer(lang='jp')` will use Sudachi-backed splitter automatically.
+
+Notes:
+- The tokenizer is instantiated once (singleton) for performance.
+- If Sudachi is not installed, `LimeTextExplainer(lang='jp')` will raise an ImportError with instructions.
+- A minimal character-based fallback exists in `lime.japanese.splitters.mecab_unidic_split` to keep basic tests runnable without Sudachi, but production usage should install Sudachi.
+
 ## What are explanations?
 
 Intuitively, an explanation is a local linear approximation of the model's behaviour.

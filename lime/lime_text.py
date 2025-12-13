@@ -313,7 +313,8 @@ class LimeTextExplainer(object):
                  bow=True,
                  mask_string=None,
                  random_state=None,
-                 char_level=False):
+                 char_level=False,
+                 lang="en"):
         """Init function.
 
         Args:
@@ -364,6 +365,17 @@ class LimeTextExplainer(object):
         self.mask_string = mask_string
         self.split_expression = split_expression
         self.char_level = char_level
+        self.lang = lang
+
+        # after parsing args in __init__, before using split_expression
+        if self.lang == "jp" and not char_level:
+            try:
+                from .japanese import mecab_unidic_split, active_japanese_tokenizer
+                # Use Sudachi when available; otherwise allow fallback tokens
+                self.split_expression = mecab_unidic_split
+            except Exception:
+                # Keep regex split if japanese package import fails
+                pass
 
     def explain_instance(self,
                          text_instance,
@@ -433,6 +445,78 @@ class LimeTextExplainer(object):
                 feature_selection=self.feature_selection)
         return ret_exp
 
+    def explain_instance_plain_text(self, exp, label=None, n_words=3):
+        """Generate a short plain-English summary for a text explanation.
+
+        Args:
+            exp: an Explanation object returned by `explain_instance`.
+            label: integer label index or label name. If None, use top label from
+                the explanation (if available) or 0.
+            n_words: number of top words to include in the summary.
+
+        Returns:
+            str: A one-sentence English summary describing the label and its
+                 most important words.
+        """
+        # Determine label index
+        if label is None:
+            if hasattr(exp, 'top_labels') and getattr(exp, 'top_labels'):
+                label_idx = exp.top_labels[0]
+            else:
+                label_idx = 0
+        else:
+            # allow passing label name or index
+            if isinstance(label, int):
+                label_idx = label
+            else:
+                try:
+                    label_idx = exp.class_names.index(label)
+                except Exception:
+                    try:
+                        label_idx = int(label)
+                    except Exception:
+                        label_idx = 0
+
+        # Retrieve local explanation for the label
+        features = []
+        try:
+            features = exp.local_exp.get(label_idx, []) if isinstance(exp.local_exp, dict) else exp.local_exp[label_idx]
+        except Exception:
+            # fallback: try to access as attribute or index
+            try:
+                features = exp.local_exp[label_idx]
+            except Exception:
+                features = []
+
+        # Keep top n_words by absolute weight
+        if features:
+            try:
+                # features is list of (feature_id, weight)
+                features_sorted = sorted(features, key=lambda x: -abs(x[1]))[:n_words]
+            except Exception:
+                features_sorted = features[:n_words]
+        else:
+            features_sorted = []
+
+        # Map feature ids to words using the domain mapper
+        words = []
+        try:
+            mapped = exp.domain_mapper.map_exp_ids(features_sorted, positions=False)
+            words = [w for w, _ in mapped]
+        except Exception:
+            try:
+                words = [str(x[0]) for x in features_sorted]
+            except Exception:
+                words = []
+
+        label_name = exp.class_names[label_idx] if getattr(exp, 'class_names', None) is not None else str(label_idx)
+
+        if len(words) == 0:
+            return f"In this text, the model {label_name} did not return any explanatory words."
+
+        quoted = ', '.join(words)
+        return f'In this text, the overall probability we can see that the model {label_name} is characterized by the words such as "{quoted}".'
+
     def __data_labels_distances(self,
                                 indexed_string,
                                 classifier_fn,
@@ -481,5 +565,170 @@ class LimeTextExplainer(object):
             data[i, inactive] = 0
             inverse_data.append(indexed_string.inverse_removing(inactive))
         labels = classifier_fn(inverse_data)
+        # Ensure labels are a numpy array of shape (num_samples, n_classes)
+        labels = np.asarray(labels)
         distances = distance_fn(sp.sparse.csr_matrix(data))
         return data, labels, distances
+
+
+def generate_sentence_for_feature(word, weight, class_name):
+    """
+    Converts a single LIME word-weight pair into a natural-language sentence.
+    """
+    direction = "increased" if weight > 0 else "decreased"
+    weight_abs = abs(weight)
+
+    if weight_abs > 0.10:
+        strength = "strongly"
+    elif weight_abs > 0.05:
+        strength = "moderately"
+    else:
+        strength = "slightly"
+
+    return (
+        f'The word "{word}" {strength} {direction} '
+        f'the predicted probability of {class_name} (weight = {weight:.3f}).'
+    )
+
+
+def summarize_lime_explanation(explanation_obj, class_idx=1):
+    """
+    Takes a LIME explanation object and returns a list of natural-language sentences.
+    Works with LimeTextExplainer().
+    """
+    # Extract the explanation for the class of interest
+    try:
+        exp_list = explanation_obj.as_list(label=class_idx)
+    except Exception:
+        # Fallback: build list from local_exp
+        local = explanation_obj.local_exp.get(class_idx, []) if isinstance(explanation_obj.local_exp, dict) else explanation_obj.local_exp[class_idx]
+        # Map ids to words using the domain mapper
+        mapped = explanation_obj.domain_mapper.map_exp_ids(local, positions=False)
+        exp_list = mapped
+
+    sentences = []
+    class_names = getattr(explanation_obj, 'class_names', None)
+    class_name = class_names[class_idx] if class_names and class_idx < len(class_names) else str(class_idx)
+
+    # Generate sentence per feature
+    for word, weight in exp_list:
+        sentences.append(generate_sentence_for_feature(word, weight, class_name))
+
+    if not exp_list:
+        return sentences
+
+    # Summary overview sentence
+    highest_word, highest_weight = max(exp_list, key=lambda x: abs(x[1]))
+    overview_sentence = (
+        f'Overall, "{highest_word}" had the largest impact on the prediction '
+        f'with a weight of {highest_weight:.3f}, making it the most influential term.'
+    )
+
+    return [overview_sentence] + sentences
+
+
+def print_lime_narrative(explanation_obj, class_idx=1):
+    """
+    Prints a clean, readable explanation block.
+    """
+    narrative = summarize_lime_explanation(explanation_obj, class_idx=class_idx)
+
+    print("\nNatural-Language Explanation of LIME Output")
+    print("--------------------------------------------------")
+    for sent in narrative:
+        print("• " + sent)
+
+
+def generate_sentence_for_feature_jp(word, weight, class_name):
+    """日本語の1特徴語と重みから、自然言語の文を生成します。"""
+    direction = "上げました" if weight > 0 else "下げました"
+    weight_abs = abs(weight)
+
+    if weight_abs > 0.10:
+        strength = "大きく"
+    elif weight_abs > 0.05:
+        strength = "中程度に"
+    else:
+        strength = "わずかに"
+
+    return (
+        f'単語「{word}」は{strength}{direction} '
+        f'クラス「{class_name}」の予測確率（重み = {weight:.3f}）。'
+    )
+
+
+def summarize_lime_explanation_jp(explanation_obj, class_idx=1):
+    """LIMEの説明オブジェクトから日本語のプレーン文を生成します。"""
+    probs = getattr(explanation_obj, 'predict_proba', None)
+    class_names = getattr(explanation_obj, 'class_names', None)
+    if probs is None:
+        return ["予測確率が取得できませんでした。"]
+
+    order = np.argsort(probs)
+    class_1_idx = int(order[-1])
+    class_2_idx = int(order[-2]) if len(probs) > 1 else (1 - class_1_idx)
+
+    class_1 = class_names[class_1_idx] if class_names else str(class_1_idx)
+    class_2 = class_names[class_2_idx] if class_names else str(class_2_idx)
+
+    p0 = float(probs[class_1_idx])
+    p1 = float(probs[class_2_idx])
+
+    def _get_feats(idx):
+        try:
+            return explanation_obj.local_exp.get(idx, []) if isinstance(explanation_obj.local_exp, dict) else explanation_obj.local_exp[idx]
+        except Exception:
+            return []
+
+    feats_1 = _get_feats(class_1_idx)
+    feats_2 = _get_feats(class_2_idx)
+
+    mapper = getattr(explanation_obj, 'domain_mapper', None)
+    def _map(feats):
+        if not feats:
+            return []
+        try:
+            return mapper.map_exp_ids(feats, positions=False)
+        except Exception:
+            return [(str(fid), w) for fid, w in feats]
+
+    mapped_1 = _map(feats_1)
+    mapped_2 = _map(feats_2)
+
+    pos_1 = sorted([(w, wt) for (w, wt) in mapped_1 if wt > 0], key=lambda x: -abs(x[1]))
+    pos_2 = sorted([(w, wt) for (w, wt) in mapped_2 if wt > 0], key=lambda x: -abs(x[1]))
+
+    def _take(items, n):
+        take = items[:n]
+        if len(take) < n:
+            take += [("—", 0.0)] * (n - len(take))
+        return take
+
+    top3_1 = _take(pos_1, 3)
+    next3_1 = _take(pos_1[3:], 3)
+    top3_2 = _take(pos_2, 3)
+
+    sent1 = (
+        f"このインスタンスは{p0:.3f}対{p1:.3f}で{class_1}と分類されました。"
+        f"{class_1}への分類に最も強い影響を与えた言葉は{top3_1[0][0]}, {top3_1[1][0]}, {top3_1[2][0]}で、"
+        f"それぞれの重みは{top3_1[0][1]:.3f}, {top3_1[1][1]:.3f}, {top3_1[2][1]:.3f}となっています。"
+    )
+
+    sent2 = (
+        f"他に{class_1}への分類の確率を上げた言葉として{next3_1[0][0]} (重み = {next3_1[0][1]:.3f})、"
+        f"{next3_1[1][0]} (重み = {next3_1[1][1]:.3f})、{next3_1[2][0]} (重み = {next3_1[2][1]:.3f})などが挙げられます。"
+        f"{class_2}への分類への確率を上げた言葉として、{top3_2[0][0]} (重み = {top3_2[0][1]:.3f})、"
+        f"{top3_2[1][0]} (重み = {top3_2[1][1]:.3f})、{top3_2[2][0]} (重み = {top3_2[2][1]:.3f})などが挙げられます。"
+    )
+
+    return [sent1, sent2]
+
+
+def print_lime_narrative_jp(explanation_obj, class_idx=1):
+    """日本語の説明ブロックを整形して出力します。"""
+    narrative = summarize_lime_explanation_jp(explanation_obj, class_idx=class_idx)
+
+    print("\nLIME出力の自然言語による説明")
+    print("--------------------------------------------------")
+    for sent in narrative:
+        print("・ " + sent)
