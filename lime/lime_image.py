@@ -1,12 +1,13 @@
 """
 Functions for explaining classifiers that use Image data.
 """
-import copy
+import copy, math
 from functools import partial
 
 import numpy as np
 import sklearn
 from sklearn.utils import check_random_state
+from scipy.special import binom
 from skimage.color import gray2rgb
 from tqdm.auto import tqdm
 
@@ -132,6 +133,7 @@ class LimeImageExplainer(object):
                          batch_size=10,
                          segmentation_fn=None,
                          distance_metric='cosine',
+                         use_stratification=False,
                          model_regressor=None,
                          random_seed=None,
                          progress_bar=True):
@@ -158,6 +160,8 @@ class LimeImageExplainer(object):
             num_samples: size of the neighborhood to learn the linear model
             batch_size: batch size for model predictions
             distance_metric: the distance metric to use for weights.
+            use_stratification: generate data points using stratified sampling
+                instead of the usual Monte Carlo sampling.
             model_regressor: sklearn regressor to use in explanation. Defaults
             to Ridge regression in LimeBase. Must have model_regressor.coef_
             and 'sample_weight' as a parameter to model_regressor.fit()
@@ -195,10 +199,11 @@ class LimeImageExplainer(object):
 
         top = labels
 
-        data, labels = self.data_labels(image, fudged_image, segments,
-                                        classifier_fn, num_samples,
-                                        batch_size=batch_size,
-                                        progress_bar=progress_bar)
+        data, labels, weight_adjustments = self.data_labels(image, fudged_image, segments,
+                                                            classifier_fn, num_samples,
+                                                            batch_size=batch_size,
+                                                            use_stratification=use_stratification,
+                                                            progress_bar=progress_bar)
 
         distances = sklearn.metrics.pairwise_distances(
             data,
@@ -218,6 +223,7 @@ class LimeImageExplainer(object):
              ret_exp.local_pred[label]) = self.base.explain_instance_with_data(
                 data, labels, distances, label, num_features,
                 model_regressor=model_regressor,
+                weight_adjustments=weight_adjustments,
                 feature_selection=self.feature_selection)
         return ret_exp
 
@@ -228,6 +234,7 @@ class LimeImageExplainer(object):
                     classifier_fn,
                     num_samples,
                     batch_size=10,
+                    use_stratification=False,
                     progress_bar=True):
         """Generates images and predictions in the neighborhood of this image.
 
@@ -248,10 +255,21 @@ class LimeImageExplainer(object):
                 labels: prediction probabilities matrix
         """
         n_features = np.unique(segments).shape[0]
-        data = self.random_state.randint(0, 2, num_samples * n_features)\
-            .reshape((num_samples, n_features))
+        if use_stratification:
+            data = np.ones([num_samples, n_features], dtype=bool)
+            weight_adjustments = np.zeros(num_samples, dtype=np.float64)
+            for i in range(1, num_samples):
+                q = self.random_state.uniform(0, 1)
+                data[i,:] = self.random_state.rand(n_features) < q
+                weight_adjustments[i] = (binom(n_features, np.sum(data[i,:])) 
+                                         / (2 ** n_features)) * (n_features + 1)
+            weight_adjustments[0] = 1
+        else:
+            data = self.random_state.randint(0, 2, num_samples * n_features)\
+                .reshape((num_samples, n_features))
+            data[0, :] = 1
+            weight_adjustments = None
         labels = []
-        data[0, :] = 1
         imgs = []
         rows = tqdm(data) if progress_bar else data
         for row in rows:
@@ -269,4 +287,4 @@ class LimeImageExplainer(object):
         if len(imgs) > 0:
             preds = classifier_fn(np.array(imgs))
             labels.extend(preds)
-        return data, np.array(labels)
+        return data, np.array(labels), weight_adjustments

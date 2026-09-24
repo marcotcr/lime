@@ -1,0 +1,12 @@
+name: my_conda_environment
+channels:
+  - defaults
+dependencies:
+  - python=3.8
+  - numpy
+  - pandas
+  - scikit-learn
+  - pytest
+  - pip
+  - pip:
+      - lime  # Add pip packages here

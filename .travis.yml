@@ -1,15 +1,16 @@
 dist: xenial
-sudo: false
 language: python
 cache: pip
 python:
   - "3.6"
   - "3.7"
+  - "3.8"
+  - "3.9"
 # command to install dependencies
 install:
   - python -m pip install -U pip
   - python -m pip install -e .[dev]
 # command to run tests
 script:
-  - pytest lime
-  - flake8 lime
+  - pytest lime_stratified
+  - flake8 lime_stratified

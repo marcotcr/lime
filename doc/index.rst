@@ -1,18 +1,17 @@
-.. lime documentation master file, created by
-   sphinx-quickstart on Fri Mar 18 16:20:40 2016.
+.. lime_startified documentation master file, created by
+   sphinx-quickstart on Mon Oct 1 16:20:40 2024.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Local Interpretable Model-Agnostic Explanations (lime)
+LIME with Stratified Sampling (lime_stratified)
 ================================
 In this page, you can find the Python API reference for the lime package (local interpretable model-agnostic explanations).
-For tutorials and more information, visit `the github page <https://github.com/marcotcr/understanding-ml>`_.
-
+For tutorials and more information, visit `the github page <https://github.com/rashidrao-pk/lime_stratified>`_.
 
 .. toctree::
    :maxdepth: 2
 
-   lime 
+   lime_stratified
 
 
 

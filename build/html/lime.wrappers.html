@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>lime.wrappers package &#8212; lime_stratified 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="lime-wrappers-package">
+<h1>lime.wrappers package<a class="headerlink" href="#lime-wrappers-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-lime.wrappers.scikit_image">
+<span id="lime-wrappers-scikit-image-module"></span><h2>lime.wrappers.scikit_image module<a class="headerlink" href="#module-lime.wrappers.scikit_image" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.wrappers.scikit_image.BaseWrapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.wrappers.scikit_image.</span></span><span class="sig-name descname"><span class="pre">BaseWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">target_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.wrappers.scikit_image.BaseWrapper" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for LIME Scikit-Image wrapper</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_fn</strong> – callable function or class instance</p></li>
+<li><p><strong>target_params</strong> – dict, parameters to pass to the target_fn</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>‘target_params’ takes parameters required to instanciate the</dt><dd><p>desired Scikit-Image class/model</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.wrappers.scikit_image.BaseWrapper.filter_params">
+<span class="sig-name descname"><span class="pre">filter_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.wrappers.scikit_image.BaseWrapper.filter_params" title="Link to this definition">¶</a></dt>
+<dd><p>Filters <cite>target_params</cite> and return those in <cite>fn</cite>’s arguments.
+:param fn: arbitrary function
+:param override: dict, values to override target_params</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict, dictionary containing variables
+in both target_params and fn’s arguments.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>result</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.wrappers.scikit_image.BaseWrapper.set_params">
+<span class="sig-name descname"><span class="pre">set_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.wrappers.scikit_image.BaseWrapper.set_params" title="Link to this definition">¶</a></dt>
+<dd><p>Sets the parameters of this estimator.
+:param **params: Dictionary of parameter names mapped to their values.</p>
+<dl class="simple">
+<dt>Raises :</dt><dd><dl class="simple">
+<dt>ValueError: if any parameter is not a valid argument</dt><dd><p>for the target function</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.wrappers.scikit_image.SegmentationAlgorithm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.wrappers.scikit_image.</span></span><span class="sig-name descname"><span class="pre">SegmentationAlgorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algo_type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">target_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.wrappers.scikit_image.SegmentationAlgorithm" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lime.wrappers.scikit_image.BaseWrapper" title="lime.wrappers.scikit_image.BaseWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseWrapper</span></code></a></p>
+<dl class="simple">
+<dt>Define the image segmentation function based on Scikit-Image</dt><dd><p>implementation and a set of provided parameters</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>algo_type</strong> – string, segmentation algorithm among the following:
+‘quickshift’, ‘slic’, ‘felzenszwalb’</p></li>
+<li><p><strong>target_params</strong> – dict, algorithm parameters (valid model paramters
+as define in Scikit-Image documentation)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-lime.wrappers">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-lime.wrappers" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">lime_stratified</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Muhammad Rashid.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/lime.wrappers.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

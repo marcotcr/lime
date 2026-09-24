@@ -98,6 +98,9 @@ class SegmentationAlgorithm(BaseWrapper):
     def __init__(self, algo_type, **target_params):
         self.algo_type = algo_type
         if (self.algo_type == 'quickshift'):
+            if 'random_seed' in target_params and not has_arg(quickshift, 'random_seed'):
+                target_params['rng'] = target_params.pop('random_seed')
+
             BaseWrapper.__init__(self, quickshift, **target_params)
             kwargs = self.filter_params(quickshift)
             self.set_params(**kwargs)

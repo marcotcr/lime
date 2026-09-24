@@ -111,8 +111,7 @@ class TestSegmentationAlgorithm(unittest.TestCase):
         fn = SegmentationAlgorithm('quickshift', kernel_size=3, max_dist=6,
                                    ratio=0.5, random_seed=133)
         fn_result = fn(img)
-        original_result = quickshift(img, kernel_size=3, max_dist=6, ratio=0.5,
-                                     random_seed=133)
+        original_result = quickshift(img,kernel_size=3,max_dist=6,ratio=0.5,rng=133)
 
         # same segments
         self.assertTrue(np.array_equal(fn_result, original_result))

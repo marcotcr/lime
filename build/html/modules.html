@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>lime_stratified &#8212; lime_stratified 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="lime-stratified">
+<h1>lime_stratified<a class="headerlink" href="#lime-stratified" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="benchmark.html">benchmark package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#module-benchmark.table_perf">benchmark.table_perf module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="benchmark.html#benchmark.table_perf.interpret_data"><code class="docutils literal notranslate"><span class="pre">interpret_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#module-benchmark.text_perf">benchmark.text_perf module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="benchmark.html#benchmark.text_perf.interpret_data"><code class="docutils literal notranslate"><span class="pre">interpret_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#module-benchmark">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lime.html">lime package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lime.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.tests.html">lime.tests package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#module-lime.tests.test_discretize">lime.tests.test_discretize module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#module-lime.tests.test_generic_utils">lime.tests.test_generic_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#module-lime.tests.test_lime_tabular">lime.tests.test_lime_tabular module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#module-lime.tests.test_lime_text">lime.tests.test_lime_text module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#module-lime.tests.test_scikit_image">lime.tests.test_scikit_image module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#module-lime.tests">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.utils.html">lime.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.utils.html#module-lime.utils.generic_utils">lime.utils.generic_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.utils.html#module-lime.utils">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.wrappers.html">lime.wrappers package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.wrappers.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.wrappers.html#module-lime.wrappers.scikit_image">lime.wrappers.scikit_image module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.wrappers.html#module-lime.wrappers">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lime.html#module-lime.discretize">lime.discretize module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.discretize.BaseDiscretizer"><code class="docutils literal notranslate"><span class="pre">BaseDiscretizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.discretize.BaseDiscretizer.bins"><code class="docutils literal notranslate"><span class="pre">BaseDiscretizer.bins()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.discretize.BaseDiscretizer.discretize"><code class="docutils literal notranslate"><span class="pre">BaseDiscretizer.discretize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.discretize.BaseDiscretizer.get_undiscretize_values"><code class="docutils literal notranslate"><span class="pre">BaseDiscretizer.get_undiscretize_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.discretize.BaseDiscretizer.undiscretize"><code class="docutils literal notranslate"><span class="pre">BaseDiscretizer.undiscretize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.discretize.DecileDiscretizer"><code class="docutils literal notranslate"><span class="pre">DecileDiscretizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.discretize.DecileDiscretizer.bins"><code class="docutils literal notranslate"><span class="pre">DecileDiscretizer.bins()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.discretize.EntropyDiscretizer"><code class="docutils literal notranslate"><span class="pre">EntropyDiscretizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.discretize.EntropyDiscretizer.bins"><code class="docutils literal notranslate"><span class="pre">EntropyDiscretizer.bins()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.discretize.QuartileDiscretizer"><code class="docutils literal notranslate"><span class="pre">QuartileDiscretizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.discretize.QuartileDiscretizer.bins"><code class="docutils literal notranslate"><span class="pre">QuartileDiscretizer.bins()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.discretize.StatsDiscretizer"><code class="docutils literal notranslate"><span class="pre">StatsDiscretizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.discretize.StatsDiscretizer.bins"><code class="docutils literal notranslate"><span class="pre">StatsDiscretizer.bins()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.html#module-lime.exceptions">lime.exceptions module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.exceptions.LimeError"><code class="docutils literal notranslate"><span class="pre">LimeError</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.html#module-lime.explanation">lime.explanation module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.explanation.DomainMapper"><code class="docutils literal notranslate"><span class="pre">DomainMapper</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.explanation.DomainMapper.map_exp_ids"><code class="docutils literal notranslate"><span class="pre">DomainMapper.map_exp_ids()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.explanation.DomainMapper.visualize_instance_html"><code class="docutils literal notranslate"><span class="pre">DomainMapper.visualize_instance_html()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.explanation.Explanation"><code class="docutils literal notranslate"><span class="pre">Explanation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.explanation.Explanation.as_html"><code class="docutils literal notranslate"><span class="pre">Explanation.as_html()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.explanation.Explanation.as_list"><code class="docutils literal notranslate"><span class="pre">Explanation.as_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.explanation.Explanation.as_map"><code class="docutils literal notranslate"><span class="pre">Explanation.as_map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.explanation.Explanation.as_pyplot_figure"><code class="docutils literal notranslate"><span class="pre">Explanation.as_pyplot_figure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.explanation.Explanation.available_labels"><code class="docutils literal notranslate"><span class="pre">Explanation.available_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.explanation.Explanation.save_to_file"><code class="docutils literal notranslate"><span class="pre">Explanation.save_to_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.explanation.Explanation.show_in_notebook"><code class="docutils literal notranslate"><span class="pre">Explanation.show_in_notebook()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.explanation.id_generator"><code class="docutils literal notranslate"><span class="pre">id_generator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.html#module-lime.lime_base">lime.lime_base module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.lime_base.LimeBase"><code class="docutils literal notranslate"><span class="pre">LimeBase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_base.LimeBase.explain_instance_with_data"><code class="docutils literal notranslate"><span class="pre">LimeBase.explain_instance_with_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_base.LimeBase.feature_selection"><code class="docutils literal notranslate"><span class="pre">LimeBase.feature_selection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_base.LimeBase.forward_selection"><code class="docutils literal notranslate"><span class="pre">LimeBase.forward_selection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_base.LimeBase.generate_lars_path"><code class="docutils literal notranslate"><span class="pre">LimeBase.generate_lars_path()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.html#module-lime.lime_image">lime.lime_image module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.lime_image.ImageExplanation"><code class="docutils literal notranslate"><span class="pre">ImageExplanation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_image.ImageExplanation.get_image_and_mask"><code class="docutils literal notranslate"><span class="pre">ImageExplanation.get_image_and_mask()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.lime_image.LimeImageExplainer"><code class="docutils literal notranslate"><span class="pre">LimeImageExplainer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_image.LimeImageExplainer.data_labels"><code class="docutils literal notranslate"><span class="pre">LimeImageExplainer.data_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_image.LimeImageExplainer.explain_instance"><code class="docutils literal notranslate"><span class="pre">LimeImageExplainer.explain_instance()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.html#module-lime.lime_tabular">lime.lime_tabular module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.lime_tabular.LimeTabularExplainer"><code class="docutils literal notranslate"><span class="pre">LimeTabularExplainer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_tabular.LimeTabularExplainer.convert_and_round"><code class="docutils literal notranslate"><span class="pre">LimeTabularExplainer.convert_and_round()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_tabular.LimeTabularExplainer.explain_instance"><code class="docutils literal notranslate"><span class="pre">LimeTabularExplainer.explain_instance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_tabular.LimeTabularExplainer.validate_training_data_stats"><code class="docutils literal notranslate"><span class="pre">LimeTabularExplainer.validate_training_data_stats()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.lime_tabular.RecurrentTabularExplainer"><code class="docutils literal notranslate"><span class="pre">RecurrentTabularExplainer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_tabular.RecurrentTabularExplainer.explain_instance"><code class="docutils literal notranslate"><span class="pre">RecurrentTabularExplainer.explain_instance()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.lime_tabular.TableDomainMapper"><code class="docutils literal notranslate"><span class="pre">TableDomainMapper</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_tabular.TableDomainMapper.map_exp_ids"><code class="docutils literal notranslate"><span class="pre">TableDomainMapper.map_exp_ids()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_tabular.TableDomainMapper.visualize_instance_html"><code class="docutils literal notranslate"><span class="pre">TableDomainMapper.visualize_instance_html()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.html#module-lime.lime_text">lime.lime_text module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.lime_text.IndexedCharacters"><code class="docutils literal notranslate"><span class="pre">IndexedCharacters</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_text.IndexedCharacters.inverse_removing"><code class="docutils literal notranslate"><span class="pre">IndexedCharacters.inverse_removing()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_text.IndexedCharacters.num_words"><code class="docutils literal notranslate"><span class="pre">IndexedCharacters.num_words()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_text.IndexedCharacters.raw_string"><code class="docutils literal notranslate"><span class="pre">IndexedCharacters.raw_string()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_text.IndexedCharacters.string_position"><code class="docutils literal notranslate"><span class="pre">IndexedCharacters.string_position()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_text.IndexedCharacters.word"><code class="docutils literal notranslate"><span class="pre">IndexedCharacters.word()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.lime_text.IndexedString"><code class="docutils literal notranslate"><span class="pre">IndexedString</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_text.IndexedString.inverse_removing"><code class="docutils literal notranslate"><span class="pre">IndexedString.inverse_removing()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_text.IndexedString.num_words"><code class="docutils literal notranslate"><span class="pre">IndexedString.num_words()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_text.IndexedString.raw_string"><code class="docutils literal notranslate"><span class="pre">IndexedString.raw_string()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_text.IndexedString.string_position"><code class="docutils literal notranslate"><span class="pre">IndexedString.string_position()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_text.IndexedString.word"><code class="docutils literal notranslate"><span class="pre">IndexedString.word()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.lime_text.LimeTextExplainer"><code class="docutils literal notranslate"><span class="pre">LimeTextExplainer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_text.LimeTextExplainer.explain_instance"><code class="docutils literal notranslate"><span class="pre">LimeTextExplainer.explain_instance()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.lime_text.TextDomainMapper"><code class="docutils literal notranslate"><span class="pre">TextDomainMapper</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_text.TextDomainMapper.map_exp_ids"><code class="docutils literal notranslate"><span class="pre">TextDomainMapper.map_exp_ids()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.html#lime.lime_text.TextDomainMapper.visualize_instance_html"><code class="docutils literal notranslate"><span class="pre">TextDomainMapper.visualize_instance_html()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.html#module-lime.submodular_pick">lime.submodular_pick module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.html#lime.submodular_pick.SubmodularPick"><code class="docutils literal notranslate"><span class="pre">SubmodularPick</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.html#module-lime">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">setup module</a></li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">lime_stratified</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Muhammad Rashid.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/modules.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

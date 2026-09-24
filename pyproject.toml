@@ -1,0 +1,49 @@
+[project]
+name = "lime_stratified"
+version = "0.0.1"
+authors = [
+  { name="Muhammad Rashid", email="muhammadrashid8045@gmail.com" },
+]
+
+license = "BSD-2-Clause"
+
+description = "Using Stratified Sampling to Improve LIME Image Explanations"
+readme = "README.md"
+requires-python = ">=3.8"
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "matplotlib",
+    "numpy",
+    "scipy",
+    "tqdm>=4.29.1",
+    "scikit-learn>=0.18",
+    "scikit-image>=0.12",
+    "pyDOE2==1.3.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "flake8",
+    "black",
+    "mypy",
+    "build",
+]
+
+[project.urls]
+Homepage = "https://github.com/rashidrao-pk/lime_stratified"
+Issues = "https://github.com/rashidrao-pk/lime_stratified/issues"
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["lime", "lime.*"]
+namespaces = false

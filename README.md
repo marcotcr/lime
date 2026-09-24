@@ -1,11 +1,97 @@
-# lime
+<h1> Using Stratified Sampling to Improve LIME Image Explanations </h1>
+<center> <img src='doc/images/LIME_Stratified.png' width=30%> </center>
+<p align="center">
+    <a href="https://pypi.org/project/lime-stratified/">
+        <img alt="PyPI version" src="https://img.shields.io/pypi/v/lime-stratified">
+    </a>
+    <a href="https://pypi.org/project/lime-stratified/">
+        <img alt="Python versions" src="https://img.shields.io/pypi/pyversions/lime-stratified">
+    </a>
+    <a href="https://github.com/rashidrao-pk/lime_stratified/actions/workflows/python-tests.yml">
+        <img alt="Python Tests" src="https://github.com/rashidrao-pk/lime_stratified/actions/workflows/python-tests.yml/badge.svg?branch=master">
+    </a>
+    <a href="https://github.com/rashidrao-pk/lime_stratified/actions/workflows/makefile.yml">
+        <img alt="Documentation CI" src="https://github.com/rashidrao-pk/lime_stratified/actions/workflows/makefile.yml/badge.svg?branch=master">
+    </a>
+    <a href="https://codecov.io/gh/rashidrao-pk/lime_stratified">
+        <img alt="Coverage" src="https://codecov.io/gh/rashidrao-pk/lime_stratified/branch/master/graph/badge.svg">
+    </a>
+    <a href="https://github.com/rashidrao-pk/lime_stratified/blob/master/LICENSE">
+        <img alt="License" src="https://img.shields.io/github/license/rashidrao-pk/lime_stratified">
+    </a>
+</p>
 
-[![Build Status](https://travis-ci.org/marcotcr/lime.svg?branch=master)](https://travis-ci.org/marcotcr/lime)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcotcr/lime/master)
+- This repository contains the changes needed to add the stratified sampling strategy to the original codebase of LIME proposed for the Research Article <a href='https://doi.org/10.1609/aaai.v38i13.29397'>'<b>Using Stratified Sampling to Improve LIME Image Explanations</b>'. </a> published at <a href='https://ojs.aaai.org/index.php/AAAI/index'> Proceedings of the AAAI Conference on Artificial Intelligence. </a>
+
+- Additional experiments for the proposed strategy are available here at <b><a href='https://github.com/rashidrao-pk/lime-stratified-examples'> LIME Stratified Examples </a></b>
+
+## Installation
+
+The lime_stratified package is on **[PyPI](https://pypi.org/project/lime-stratified/)**, Simply run:
+
+```sh
+pip install lime_stratified
+```
+
+alternatively, it can also be installed using:
+
+```sh
+pip install git+https://github.com/rashidrao-pk/lime_stratified.git
+```
+
+Or clone the repository and run:
+
+```sh
+git clone https://github.com/rashidrao-pk/lime_stratified
+cd lime_stratified
+python -m pip install .
+```
+
+### How to use ?
+
+- The class `LimeImageExplainer` adds a single parameter `use_stratification` to the `explain_instance` method. When the parameter is False, the code behaves exactly like the original LIME implementation. When `use_stratification=True` the algorithm _StratifiedSampling_ is used, as described in the paper.
+
+```python
+# Code example
+from lime import lime_image
+lime_explainer = lime_image.LimeImageExplainer(random_state=1234)
+explanation = lime_explainer.explain_instance(image_to_explain,
+                                              blackbox_model,
+                                              use_stratification=True)
+```
+
+## Paper PDF:
+
+**Using Stratified Sampling to Improve LIME Image Explanations** can be found at [LINK](https://ojs.aaai.org/index.php/AAAI/article/view/29397) and also on <a href=''> <a href = 'https://arxiv.org/abs/2403.17742'> <img src="https://cdn.jsdelivr.net/gh/DmitryRyumin/NewEraAI-Papers@main/images/arxiv-logo.svg" width="45" alt="" /> </a>
+</a>.
+
+# Cite
+
+If you use our proposed strategy, please cite us: <br>
+
+```
+@inproceedings{rashid2024using,
+  title={Using Stratified Sampling to Improve LIME Image Explanations},
+  author={Rashid, Muhammad and Amparore, Elvio G and Ferrari, Enrico and Verda, Damiano},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={38},
+  number={13},
+  pages={14785--14792},
+  year={2024}
+}
+```
+
+<br>
+The remaining part of this README is adapted from the original LIME README.
+
+# LIME_Stratified
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rashidrao-pk/lime_stratified/HEAD)
 
 This project is about explaining what machine learning classifiers (or models) are doing.
-At the moment, we support explaining individual predictions for text classifiers or classifiers that act on tables (numpy arrays of numerical or categorical data) or images, with a package called lime (short for local interpretable model-agnostic explanations).
-Lime is based on the work presented in [this paper](https://arxiv.org/abs/1602.04938) ([bibtex here for citation](https://github.com/marcotcr/lime/blob/master/citation.bib)). Here is a link to the promo video:
+At the moment, we support explaining individual predictions for text classifiers or classifiers that act on tables (numpy arrays of numerical or categorical data) or images, with a package called lime (short for local interpretable model-agnostic explanations based on **stratification approach**).
+
+LIME_Stratified is based on the work presented in [this paper](https://doi.org/10.1609/aaai.v38i13.29397) ([bibtex here for citation](https://github.com/rashidrao-pk/lime_stratified/blob/master/citation.bib)). Here is a link to the promo video:
 
 <a href="https://www.youtube.com/watch?v=hUnRCxnydCc" target="_blank"><img src="https://raw.githubusercontent.com/marcotcr/lime/master/doc/images/video_screenshot.png" width="450" alt="KDD promo video"/></a>
 
@@ -13,43 +99,7 @@ Our plan is to add more packages that help users understand and interact meaning
 
 Lime is able to explain any black box classifier, with two or more classes. All we require is that the classifier implements a function that takes in raw text or a numpy array and outputs a probability for each class. Support for scikit-learn classifiers is built-in.
 
-## Installation
-
-The lime package is on [PyPI](https://pypi.python.org/pypi/lime). Simply run:
-
-```sh
-pip install lime
-```
-
-Or clone the repository and run:
-
-```sh
-pip install .
-```
-
 We dropped python2 support in `0.2.0`, `0.1.1.37` was the last version before that.
-
-## Screenshots
-
-Below are some screenshots of lime explanations. These are generated in html, and can be easily produced and embedded in ipython notebooks. We also support visualizations using matplotlib, although they don't look as nice as these ones.
-
-#### Two class case, text
-
-Negative (blue) words indicate atheism, while positive (orange) words indicate christian. The way to interpret the weights by applying them to the prediction probabilities. For example, if we remove the words Host and NNTP from the document, we expect the classifier to predict atheism with probability 0.58 - 0.14 - 0.11 = 0.31.
-
-![twoclass](doc/images/twoclass.png)
-
-#### Multiclass case
-
-![multiclass](doc/images/multiclass.png)
-
-#### Tabular data
-
-![tabular](doc/images/tabular.png)
-
-#### Images (explaining prediction of 'Cat' in pros and cons)
-
-<img src="https://raw.githubusercontent.com/marcotcr/lime/master/doc/images/images.png" width=200 />
 
 ## Tutorials and API
 
@@ -84,17 +134,11 @@ The raw (non-html) notebooks for these tutorials are available [here](https://gi
 
 The API reference is available [here](https://lime-ml.readthedocs.io/en/latest/).
 
-## What are explanations?
+### How LIME_Image Works?
 
-Intuitively, an explanation is a local linear approximation of the model's behaviour.
-While the model may be very complex globally, it is easier to approximate it around the vicinity of a particular instance.
-While treating the model as a black box, we perturb the instance we want to explain and learn a sparse linear model around it, as an explanation.
-The figure below illustrates the intuition for this procedure. The model's decision function is represented by the blue/pink background, and is clearly nonlinear.
-The bright red cross is the instance being explained (let's call it X).
-We sample instances around X, and weight them according to their proximity to X (weight here is indicated by size).
-We then learn a linear model (dashed line) that approximates the model well in the vicinity of X, but not necessarily globally. For more information, [read our paper](https://arxiv.org/abs/1602.04938), or take a look at [this blog post](https://www.oreilly.com/learning/introduction-to-local-interpretable-model-agnostic-explanations-lime).
+<img src="doc/images/LIME-Image-workflow.png"/>
 
-<img src="https://raw.githubusercontent.com/marcotcr/lime/master/doc/images/lime.png" width=300px />
+Documentation
 
 ## Contributing
 

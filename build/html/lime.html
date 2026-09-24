@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>lime package &#8212; lime_stratified 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="lime-package">
+<h1>lime package<a class="headerlink" href="#lime-package" title="Link to this heading">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lime.tests.html">lime.tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lime.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lime.tests.html#module-lime.tests.test_discretize">lime.tests.test_discretize module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.tests.html#lime.tests.test_discretize.TestDiscretize"><code class="docutils literal notranslate"><span class="pre">TestDiscretize</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_discretize.TestDiscretize.check_random_state_for_discretizer_class"><code class="docutils literal notranslate"><span class="pre">TestDiscretize.check_random_state_for_discretizer_class()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_discretize.TestDiscretize.setUp"><code class="docutils literal notranslate"><span class="pre">TestDiscretize.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_discretize.TestDiscretize.test_feature_names_1"><code class="docutils literal notranslate"><span class="pre">TestDiscretize.test_feature_names_1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_discretize.TestDiscretize.test_feature_names_2"><code class="docutils literal notranslate"><span class="pre">TestDiscretize.test_feature_names_2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_discretize.TestDiscretize.test_feature_names_3"><code class="docutils literal notranslate"><span class="pre">TestDiscretize.test_feature_names_3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_discretize.TestDiscretize.test_random_state"><code class="docutils literal notranslate"><span class="pre">TestDiscretize.test_random_state()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.tests.html#module-lime.tests.test_generic_utils">lime.tests.test_generic_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.tests.html#lime.tests.test_generic_utils.TestGenericUtils"><code class="docutils literal notranslate"><span class="pre">TestGenericUtils</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_generic_utils.TestGenericUtils.test_has_arg"><code class="docutils literal notranslate"><span class="pre">TestGenericUtils.test_has_arg()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.tests.html#module-lime.tests.test_lime_tabular">lime.tests.test_lime_tabular module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_tabular.TestLimeTabular"><code class="docutils literal notranslate"><span class="pre">TestLimeTabular</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_tabular.TestLimeTabular.setUp"><code class="docutils literal notranslate"><span class="pre">TestLimeTabular.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_tabular.TestLimeTabular.testFeatureNamesAndCategoricalFeats"><code class="docutils literal notranslate"><span class="pre">TestLimeTabular.testFeatureNamesAndCategoricalFeats()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_tabular.TestLimeTabular.testFeatureValues"><code class="docutils literal notranslate"><span class="pre">TestLimeTabular.testFeatureValues()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_tabular.TestLimeTabular.test_lime_explainer_entropy_discretizer"><code class="docutils literal notranslate"><span class="pre">TestLimeTabular.test_lime_explainer_entropy_discretizer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_tabular.TestLimeTabular.test_lime_explainer_good_regressor"><code class="docutils literal notranslate"><span class="pre">TestLimeTabular.test_lime_explainer_good_regressor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_tabular.TestLimeTabular.test_lime_explainer_good_regressor_synthetic_data"><code class="docutils literal notranslate"><span class="pre">TestLimeTabular.test_lime_explainer_good_regressor_synthetic_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_tabular.TestLimeTabular.test_lime_explainer_no_regressor"><code class="docutils literal notranslate"><span class="pre">TestLimeTabular.test_lime_explainer_no_regressor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_tabular.TestLimeTabular.test_lime_explainer_sparse_synthetic_data"><code class="docutils literal notranslate"><span class="pre">TestLimeTabular.test_lime_explainer_sparse_synthetic_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_tabular.TestLimeTabular.test_lime_explainer_with_data_stats"><code class="docutils literal notranslate"><span class="pre">TestLimeTabular.test_lime_explainer_with_data_stats()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_tabular.TestLimeTabular.test_lime_tabular_explainer_equal_random_state"><code class="docutils literal notranslate"><span class="pre">TestLimeTabular.test_lime_tabular_explainer_equal_random_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_tabular.TestLimeTabular.test_lime_tabular_explainer_not_equal_random_state"><code class="docutils literal notranslate"><span class="pre">TestLimeTabular.test_lime_tabular_explainer_not_equal_random_state()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.tests.html#module-lime.tests.test_lime_text">lime.tests.test_lime_text module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_text.TestLimeText"><code class="docutils literal notranslate"><span class="pre">TestLimeText</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_text.TestLimeText.test_indexed_characters_bow"><code class="docutils literal notranslate"><span class="pre">TestLimeText.test_indexed_characters_bow()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_text.TestLimeText.test_indexed_characters_not_bow"><code class="docutils literal notranslate"><span class="pre">TestLimeText.test_indexed_characters_not_bow()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_text.TestLimeText.test_indexed_string_callable"><code class="docutils literal notranslate"><span class="pre">TestLimeText.test_indexed_string_callable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_text.TestLimeText.test_indexed_string_inverse_removing_regex"><code class="docutils literal notranslate"><span class="pre">TestLimeText.test_indexed_string_inverse_removing_regex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_text.TestLimeText.test_indexed_string_inverse_removing_tokenizer"><code class="docutils literal notranslate"><span class="pre">TestLimeText.test_indexed_string_inverse_removing_tokenizer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_text.TestLimeText.test_indexed_string_regex"><code class="docutils literal notranslate"><span class="pre">TestLimeText.test_indexed_string_regex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_text.TestLimeText.test_lime_text_explainer_good_regressor"><code class="docutils literal notranslate"><span class="pre">TestLimeText.test_lime_text_explainer_good_regressor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_text.TestLimeText.test_lime_text_tabular_equal_random_state"><code class="docutils literal notranslate"><span class="pre">TestLimeText.test_lime_text_tabular_equal_random_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_lime_text.TestLimeText.test_lime_text_tabular_not_equal_random_state"><code class="docutils literal notranslate"><span class="pre">TestLimeText.test_lime_text_tabular_not_equal_random_state()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.tests.html#module-lime.tests.test_scikit_image">lime.tests.test_scikit_image module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.tests.html#lime.tests.test_scikit_image.TestBaseWrapper"><code class="docutils literal notranslate"><span class="pre">TestBaseWrapper</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_scikit_image.TestBaseWrapper.test__check_params"><code class="docutils literal notranslate"><span class="pre">TestBaseWrapper.test__check_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_scikit_image.TestBaseWrapper.test_base_wrapper"><code class="docutils literal notranslate"><span class="pre">TestBaseWrapper.test_base_wrapper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_scikit_image.TestBaseWrapper.test_filter_params"><code class="docutils literal notranslate"><span class="pre">TestBaseWrapper.test_filter_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_scikit_image.TestBaseWrapper.test_set_params"><code class="docutils literal notranslate"><span class="pre">TestBaseWrapper.test_set_params()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.tests.html#lime.tests.test_scikit_image.TestSegmentationAlgorithm"><code class="docutils literal notranslate"><span class="pre">TestSegmentationAlgorithm</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_scikit_image.TestSegmentationAlgorithm.test_instanciate_felzenszwalb"><code class="docutils literal notranslate"><span class="pre">TestSegmentationAlgorithm.test_instanciate_felzenszwalb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_scikit_image.TestSegmentationAlgorithm.test_instanciate_segmentation_algorithm"><code class="docutils literal notranslate"><span class="pre">TestSegmentationAlgorithm.test_instanciate_segmentation_algorithm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.tests.html#lime.tests.test_scikit_image.TestSegmentationAlgorithm.test_instanciate_slic"><code class="docutils literal notranslate"><span class="pre">TestSegmentationAlgorithm.test_instanciate_slic()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.tests.html#module-lime.tests">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lime.utils.html">lime.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lime.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lime.utils.html#module-lime.utils.generic_utils">lime.utils.generic_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.utils.html#lime.utils.generic_utils.has_arg"><code class="docutils literal notranslate"><span class="pre">has_arg()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.utils.html#module-lime.utils">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lime.wrappers.html">lime.wrappers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lime.wrappers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lime.wrappers.html#module-lime.wrappers.scikit_image">lime.wrappers.scikit_image module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lime.wrappers.html#lime.wrappers.scikit_image.BaseWrapper"><code class="docutils literal notranslate"><span class="pre">BaseWrapper</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lime.wrappers.html#lime.wrappers.scikit_image.BaseWrapper.filter_params"><code class="docutils literal notranslate"><span class="pre">BaseWrapper.filter_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lime.wrappers.html#lime.wrappers.scikit_image.BaseWrapper.set_params"><code class="docutils literal notranslate"><span class="pre">BaseWrapper.set_params()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lime.wrappers.html#lime.wrappers.scikit_image.SegmentationAlgorithm"><code class="docutils literal notranslate"><span class="pre">SegmentationAlgorithm</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lime.wrappers.html#module-lime.wrappers">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-lime.discretize">
+<span id="lime-discretize-module"></span><h2>lime.discretize module<a class="headerlink" href="#module-lime.discretize" title="Link to this heading">¶</a></h2>
+<p>Discretizers classes, to be used in lime_tabular</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.discretize.BaseDiscretizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.discretize.</span></span><span class="sig-name descname"><span class="pre">BaseDiscretizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_stats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.discretize.BaseDiscretizer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Abstract class - Build a class that inherits from this class to implement
+a custom discretizer.
+Method bins() is to be redefined in the child class, as it is the actual
+custom part of the discretizer.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.discretize.BaseDiscretizer.bins">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.discretize.BaseDiscretizer.bins" title="Link to this definition">¶</a></dt>
+<dd><p>To be overridden
+Returns for each feature to discretize the boundaries
+that form each bin of the discretizer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.discretize.BaseDiscretizer.discretize">
+<span class="sig-name descname"><span class="pre">discretize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.discretize.BaseDiscretizer.discretize" title="Link to this definition">¶</a></dt>
+<dd><p>Discretizes the data.
+:param data: numpy 2d or 1d array</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy array of same dimension, discretized.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.discretize.BaseDiscretizer.get_undiscretize_values">
+<span class="sig-name descname"><span class="pre">get_undiscretize_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.discretize.BaseDiscretizer.get_undiscretize_values" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.discretize.BaseDiscretizer.undiscretize">
+<span class="sig-name descname"><span class="pre">undiscretize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.discretize.BaseDiscretizer.undiscretize" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.discretize.DecileDiscretizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.discretize.</span></span><span class="sig-name descname"><span class="pre">DecileDiscretizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.discretize.DecileDiscretizer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lime.discretize.BaseDiscretizer" title="lime.discretize.BaseDiscretizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDiscretizer</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.discretize.DecileDiscretizer.bins">
+<span class="sig-name descname"><span class="pre">bins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.discretize.DecileDiscretizer.bins" title="Link to this definition">¶</a></dt>
+<dd><p>To be overridden
+Returns for each feature to discretize the boundaries
+that form each bin of the discretizer</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.discretize.EntropyDiscretizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.discretize.</span></span><span class="sig-name descname"><span class="pre">EntropyDiscretizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.discretize.EntropyDiscretizer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lime.discretize.BaseDiscretizer" title="lime.discretize.BaseDiscretizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDiscretizer</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.discretize.EntropyDiscretizer.bins">
+<span class="sig-name descname"><span class="pre">bins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.discretize.EntropyDiscretizer.bins" title="Link to this definition">¶</a></dt>
+<dd><p>To be overridden
+Returns for each feature to discretize the boundaries
+that form each bin of the discretizer</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.discretize.QuartileDiscretizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.discretize.</span></span><span class="sig-name descname"><span class="pre">QuartileDiscretizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.discretize.QuartileDiscretizer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lime.discretize.BaseDiscretizer" title="lime.discretize.BaseDiscretizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDiscretizer</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.discretize.QuartileDiscretizer.bins">
+<span class="sig-name descname"><span class="pre">bins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.discretize.QuartileDiscretizer.bins" title="Link to this definition">¶</a></dt>
+<dd><p>To be overridden
+Returns for each feature to discretize the boundaries
+that form each bin of the discretizer</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.discretize.StatsDiscretizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.discretize.</span></span><span class="sig-name descname"><span class="pre">StatsDiscretizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_stats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.discretize.StatsDiscretizer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lime.discretize.BaseDiscretizer" title="lime.discretize.BaseDiscretizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDiscretizer</span></code></a></p>
+<p>Class to be used to supply the data stats info when discretize_continuous is true</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.discretize.StatsDiscretizer.bins">
+<span class="sig-name descname"><span class="pre">bins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.discretize.StatsDiscretizer.bins" title="Link to this definition">¶</a></dt>
+<dd><p>To be overridden
+Returns for each feature to discretize the boundaries
+that form each bin of the discretizer</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-lime.exceptions">
+<span id="lime-exceptions-module"></span><h2>lime.exceptions module<a class="headerlink" href="#module-lime.exceptions" title="Link to this heading">¶</a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="lime.exceptions.LimeError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.exceptions.</span></span><span class="sig-name descname"><span class="pre">LimeError</span></span><a class="headerlink" href="#lime.exceptions.LimeError" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Raise for errors</p>
+</dd></dl>
+
+</section>
+<section id="module-lime.explanation">
+<span id="lime-explanation-module"></span><h2>lime.explanation module<a class="headerlink" href="#module-lime.explanation" title="Link to this heading">¶</a></h2>
+<p>Explanation class, with visualization functions.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.explanation.DomainMapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.explanation.</span></span><span class="sig-name descname"><span class="pre">DomainMapper</span></span><a class="headerlink" href="#lime.explanation.DomainMapper" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping features to the specific domain.</p>
+<p>The idea is that there would be a subclass for each domain (text, tables,
+images, etc), so that we can have a general Explanation class, and separate
+out the specifics of visualizing features in here.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.explanation.DomainMapper.map_exp_ids">
+<span class="sig-name descname"><span class="pre">map_exp_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.explanation.DomainMapper.map_exp_ids" title="Link to this definition">¶</a></dt>
+<dd><p>Maps the feature ids to concrete names.</p>
+<p>Default behaviour is the identity function. Subclasses can implement
+this as they see fit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exp</strong> – list of tuples [(id, weight), (id,weight)]</p></li>
+<li><p><strong>kwargs</strong> – optional keyword arguments</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of tuples [(name, weight), (name, weight)…]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>exp</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.explanation.DomainMapper.visualize_instance_html">
+<span class="sig-name descname"><span class="pre">visualize_instance_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">div_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_object_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.explanation.DomainMapper.visualize_instance_html" title="Link to this definition">¶</a></dt>
+<dd><p>Produces html for visualizing the instance.</p>
+<p>Default behaviour does nothing. Subclasses can implement this as they
+see fit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exp</strong> – list of tuples [(id, weight), (id,weight)]</p></li>
+<li><p><strong>label</strong> – label id (integer)</p></li>
+<li><p><strong>div_name</strong> – name of div object to be used for rendering(in js)</p></li>
+<li><p><strong>exp_object_name</strong> – name of js explanation object</p></li>
+<li><p><strong>kwargs</strong> – optional keyword arguments</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>js code for visualizing the instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.explanation.Explanation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.explanation.</span></span><span class="sig-name descname"><span class="pre">Explanation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain_mapper</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'classification'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.explanation.Explanation" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Object returned by explainers.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.explanation.Explanation.as_html">
+<span class="sig-name descname"><span class="pre">as_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_proba</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_predicted_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.explanation.Explanation.as_html" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the explanation as an html page.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>labels</strong> – desired labels to show explanations for (as barcharts).
+If you ask for a label for which an explanation wasn’t
+computed, will throw an exception. If None, will show
+explanations for all available labels. (only used for classification)</p></li>
+<li><p><strong>predict_proba</strong> – if true, add  barchart with prediction probabilities
+for the top classes. (only used for classification)</p></li>
+<li><p><strong>show_predicted_value</strong> – if true, add  barchart with expected value
+(only used for regression)</p></li>
+<li><p><strong>kwargs</strong> – keyword arguments, passed to domain_mapper</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>code for an html page, including javascript includes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.explanation.Explanation.as_list">
+<span class="sig-name descname"><span class="pre">as_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.explanation.Explanation.as_list" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the explanation as a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label</strong> – desired label. If you ask for a label for which an
+explanation wasn’t computed, will throw an exception.
+Will be ignored for regression explanations.</p></li>
+<li><p><strong>kwargs</strong> – keyword arguments, passed to domain_mapper</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of tuples (representation, weight), where representation is
+given by domain_mapper. Weight is a float.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.explanation.Explanation.as_map">
+<span class="sig-name descname"><span class="pre">as_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lime.explanation.Explanation.as_map" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the map of explanations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Map from label to list of tuples (feature_id, weight).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.explanation.Explanation.as_pyplot_figure">
+<span class="sig-name descname"><span class="pre">as_pyplot_figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.explanation.Explanation.as_pyplot_figure" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the explanation as a pyplot figure.</p>
+<p>Will throw an error if you don’t have matplotlib installed
+:param label: desired label. If you ask for a label for which an</p>
+<blockquote>
+<div><p>explanation wasn’t computed, will throw an exception.
+Will be ignored for regression explanations.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – keyword arguments, passed to domain_mapper</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>pyplot figure (barchart).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.explanation.Explanation.available_labels">
+<span class="sig-name descname"><span class="pre">available_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lime.explanation.Explanation.available_labels" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the list of classification labels for which we have any explanations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.explanation.Explanation.save_to_file">
+<span class="sig-name descname"><span class="pre">save_to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_proba</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_predicted_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.explanation.Explanation.save_to_file" title="Link to this definition">¶</a></dt>
+<dd><p>Saves html explanation to file. .</p>
+<dl class="simple">
+<dt>Params:</dt><dd><p>file_path: file to save explanations to</p>
+</dd>
+</dl>
+<p>See as_html() for additional parameters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.explanation.Explanation.show_in_notebook">
+<span class="sig-name descname"><span class="pre">show_in_notebook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_proba</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_predicted_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.explanation.Explanation.show_in_notebook" title="Link to this definition">¶</a></dt>
+<dd><p>Shows html explanation in ipython notebook.</p>
+<p>See as_html() for parameters.
+This will throw an error if you don’t have IPython installed</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lime.explanation.id_generator">
+<span class="sig-prename descclassname"><span class="pre">lime.explanation.</span></span><span class="sig-name descname"><span class="pre">id_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.explanation.id_generator" title="Link to this definition">¶</a></dt>
+<dd><p>Helper function to generate random div ids. This is useful for embedding
+HTML into ipython notebooks.</p>
+</dd></dl>
+
+</section>
+<section id="module-lime.lime_base">
+<span id="lime-lime-base-module"></span><h2>lime.lime_base module<a class="headerlink" href="#module-lime.lime_base" title="Link to this heading">¶</a></h2>
+<p>Contains abstract functionality for learning locally linear sparse model.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.lime_base.LimeBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.lime_base.</span></span><span class="sig-name descname"><span class="pre">LimeBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kernel_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_base.LimeBase" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for learning a locally linear sparse model from perturbed data</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_base.LimeBase.explain_instance_with_data">
+<span class="sig-name descname"><span class="pre">explain_instance_with_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">neighborhood_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighborhood_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_selection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_regressor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_base.LimeBase.explain_instance_with_data" title="Link to this definition">¶</a></dt>
+<dd><p>Takes perturbed data, labels and distances, returns explanation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>neighborhood_data</strong> – perturbed data, 2d array. first element is
+assumed to be the original data point.</p></li>
+<li><p><strong>neighborhood_labels</strong> – corresponding perturbed labels. should have as
+many columns as the number of possible labels.</p></li>
+<li><p><strong>distances</strong> – distances to original data point.</p></li>
+<li><p><strong>label</strong> – label for which we want an explanation</p></li>
+<li><p><strong>num_features</strong> – maximum number of features in explanation</p></li>
+<li><p><strong>feature_selection</strong> – <p>how to select num_features. options are:
+‘forward_selection’: iteratively add features to the model.</p>
+<blockquote>
+<div><p>This is costly when num_features is high</p>
+</div></blockquote>
+<dl class="simple">
+<dt>’highest_weights’: selects the features that have the highest</dt><dd><p>product of absolute weight * original data point when
+learning with all the features</p>
+</dd>
+<dt>’lasso_path’: chooses features based on the lasso</dt><dd><p>regularization path</p>
+</dd>
+</dl>
+<p>’none’: uses all features, ignores num_features
+‘auto’: uses forward_selection if num_features &lt;= 6, and</p>
+<blockquote>
+<div><p>’highest_weights’ otherwise.</p>
+</div></blockquote>
+</p></li>
+<li><p><strong>model_regressor</strong> – sklearn regressor to use in explanation.
+Defaults to Ridge regression if None. Must have
+<a href="#id1"><span class="problematic" id="id2">model_regressor.coef_</span></a> and ‘sample_weight’ as a parameter
+to model_regressor.fit()</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>intercept is a float.
+exp is a sorted list of tuples, where each tuple (x,y) corresponds
+to the feature id (x) and the local weight (y). The list is sorted
+by decreasing absolute value of y.
+score is the R^2 value of the returned explanation
+local_pred is the prediction of the explanation model on the original instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(intercept, exp, score, local_pred)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_base.LimeBase.feature_selection">
+<span class="sig-name descname"><span class="pre">feature_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_base.LimeBase.feature_selection" title="Link to this definition">¶</a></dt>
+<dd><p>Selects features for the model. see explain_instance_with_data to
+understand the parameters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_base.LimeBase.forward_selection">
+<span class="sig-name descname"><span class="pre">forward_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_features</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_base.LimeBase.forward_selection" title="Link to this definition">¶</a></dt>
+<dd><p>Iteratively adds features to the model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_base.LimeBase.generate_lars_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_lars_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weighted_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weighted_labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_base.LimeBase.generate_lars_path" title="Link to this definition">¶</a></dt>
+<dd><p>Generates the lars path for weighted data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weighted_data</strong> – data that has been weighted by kernel</p></li>
+<li><p><strong>weighted_label</strong> – labels, weighted by kernel</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(alphas, coefs), both are arrays corresponding to the
+regularization parameter and coefficients, respectively</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-lime.lime_image">
+<span id="lime-lime-image-module"></span><h2>lime.lime_image module<a class="headerlink" href="#module-lime.lime_image" title="Link to this heading">¶</a></h2>
+<p>Functions for explaining classifiers that use Image data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.lime_image.ImageExplanation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.lime_image.</span></span><span class="sig-name descname"><span class="pre">ImageExplanation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segments</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_image.ImageExplanation" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_image.ImageExplanation.get_image_and_mask">
+<span class="sig-name descname"><span class="pre">get_image_and_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positive_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negative_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hide_rest</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_image.ImageExplanation.get_image_and_mask" title="Link to this definition">¶</a></dt>
+<dd><p>Init function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label</strong> – label to explain</p></li>
+<li><p><strong>positive_only</strong> – if True, only take superpixels that positively contribute to
+the prediction of the label.</p></li>
+<li><p><strong>negative_only</strong> – if True, only take superpixels that negatively contribute to
+the prediction of the label. If false, and so is positive_only, then both
+negativey and positively contributions will be taken.
+Both can’t be True at the same time</p></li>
+<li><p><strong>hide_rest</strong> – if True, make the non-explanation part of the return
+image gray</p></li>
+<li><p><strong>num_features</strong> – number of superpixels to include in explanation</p></li>
+<li><p><strong>min_weight</strong> – minimum weight of the superpixels to include in explanation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(image, mask), where image is a 3d numpy array and mask is a 2d
+numpy array that can be used with
+skimage.segmentation.mark_boundaries</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.lime_image.LimeImageExplainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.lime_image.</span></span><span class="sig-name descname"><span class="pre">LimeImageExplainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kernel_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_selection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_image.LimeImageExplainer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Explains predictions on Image (i.e. matrix) data.
+For numerical features, perturb them by sampling from a Normal(0,1) and
+doing the inverse operation of mean-centering and scaling, according to the
+means and stds in the training data. For categorical features, perturb by
+sampling according to the training distribution, and making a binary
+feature that is 1 when the value is the same as the instance being
+explained.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_image.LimeImageExplainer.data_labels">
+<span class="sig-name descname"><span class="pre">data_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fudged_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classifier_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_image.LimeImageExplainer.data_labels" title="Link to this definition">¶</a></dt>
+<dd><p>Generates images and predictions in the neighborhood of this image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – 3d numpy array, the image</p></li>
+<li><p><strong>fudged_image</strong> – 3d numpy array, image to replace original image when
+superpixel is turned off</p></li>
+<li><p><strong>segments</strong> – segmentation of the image</p></li>
+<li><p><strong>classifier_fn</strong> – function that takes a list of images and returns a
+matrix of prediction probabilities</p></li>
+<li><p><strong>num_samples</strong> – size of the neighborhood to learn the linear model</p></li>
+<li><p><strong>batch_size</strong> – classifier_fn will be called on batches of this size.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>data: dense num_samples * num_superpixels
+labels: prediction probabilities matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple (data, labels), where</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_image.LimeImageExplainer.explain_instance">
+<span class="sig-name descname"><span class="pre">explain_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classifier_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hide_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segmentation_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cosine'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_regressor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_image.LimeImageExplainer.explain_instance" title="Link to this definition">¶</a></dt>
+<dd><p>Generates explanations for a prediction.</p>
+<p>First, we generate neighborhood data by randomly perturbing features
+from the instance (see __data_inverse). We then learn locally weighted
+linear models on this neighborhood data to explain each of the classes
+in an interpretable way (see lime_base.py).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – 3 dimension RGB image. If this is only two dimensional,
+we will assume it’s a grayscale image and call gray2rgb.</p></li>
+<li><p><strong>classifier_fn</strong> – classifier prediction probability function, which
+takes a numpy array and outputs prediction probabilities.  For
+ScikitClassifiers , this is classifier.predict_proba.</p></li>
+<li><p><strong>labels</strong> – iterable with labels to be explained.</p></li>
+<li><p><strong>hide_color</strong> – TODO</p></li>
+<li><p><strong>top_labels</strong> – if not None, ignore labels and produce explanations for
+the K labels with highest prediction probabilities, where K is
+this parameter.</p></li>
+<li><p><strong>num_features</strong> – maximum number of features present in explanation</p></li>
+<li><p><strong>num_samples</strong> – size of the neighborhood to learn the linear model</p></li>
+<li><p><strong>batch_size</strong> – TODO</p></li>
+<li><p><strong>distance_metric</strong> – the distance metric to use for weights.</p></li>
+<li><p><strong>model_regressor</strong> – sklearn regressor to use in explanation. Defaults</p></li>
+<li><p><strong>model_regressor.coef</strong> (<em>to Ridge regression in LimeBase. Must have</em>)</p></li>
+<li><p><strong>model_regressor.fit</strong><strong>(</strong><strong>)</strong> (<em>and 'sample_weight' as a parameter to</em>)</p></li>
+<li><p><strong>segmentation_fn</strong> – SegmentationAlgorithm, wrapped skimage</p></li>
+<li><p><strong>function</strong> (<em>segmentation</em>)</p></li>
+<li><p><strong>random_seed</strong> – integer used as random seed for the segmentation
+algorithm. If None, a random integer, between 0 and 1000,
+will be generated using the internal random number generator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An ImageExplanation object (see lime_image.py) with the corresponding
+explanations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-lime.lime_tabular">
+<span id="lime-lime-tabular-module"></span><h2>lime.lime_tabular module<a class="headerlink" href="#module-lime.lime_tabular" title="Link to this heading">¶</a></h2>
+<p>Functions for explaining classifiers that use tabular data (matrices).</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.lime_tabular.LimeTabularExplainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.lime_tabular.</span></span><span class="sig-name descname"><span class="pre">LimeTabularExplainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">training_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'classification'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_selection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretize_continuous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'quartile'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_around_instance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_data_stats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_tabular.LimeTabularExplainer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Explains predictions on tabular (i.e. matrix) data.
+For numerical features, perturb them by sampling from a Normal(0,1) and
+doing the inverse operation of mean-centering and scaling, according to the
+means and stds in the training data. For categorical features, perturb by
+sampling according to the training distribution, and making a binary
+feature that is 1 when the value is the same as the instance being
+explained.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_tabular.LimeTabularExplainer.convert_and_round">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">convert_and_round</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_tabular.LimeTabularExplainer.convert_and_round" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_tabular.LimeTabularExplainer.explain_instance">
+<span class="sig-name descname"><span class="pre">explain_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_regressor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_tabular.LimeTabularExplainer.explain_instance" title="Link to this definition">¶</a></dt>
+<dd><p>Generates explanations for a prediction.</p>
+<p>First, we generate neighborhood data by randomly perturbing features
+from the instance (see __data_inverse). We then learn locally weighted
+linear models on this neighborhood data to explain each of the classes
+in an interpretable way (see lime_base.py).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_row</strong> – 1d numpy array or scipy.sparse matrix, corresponding to a row</p></li>
+<li><p><strong>predict_fn</strong> – prediction function. For classifiers, this should be a
+function that takes a numpy array and outputs prediction
+probabilities. For regressors, this takes a numpy array and
+returns the predictions. For ScikitClassifiers, this is
+<cite>classifier.predict_proba()</cite>. For ScikitRegressors, this
+is <cite>regressor.predict()</cite>. The prediction function needs to work
+on multiple feature vectors (the vectors randomly perturbed
+from the data_row).</p></li>
+<li><p><strong>labels</strong> – iterable with labels to be explained.</p></li>
+<li><p><strong>top_labels</strong> – if not None, ignore labels and produce explanations for
+the K labels with highest prediction probabilities, where K is
+this parameter.</p></li>
+<li><p><strong>num_features</strong> – maximum number of features present in explanation</p></li>
+<li><p><strong>num_samples</strong> – size of the neighborhood to learn the linear model</p></li>
+<li><p><strong>distance_metric</strong> – the distance metric to use for weights.</p></li>
+<li><p><strong>model_regressor</strong> – sklearn regressor to use in explanation. Defaults
+to Ridge regression in LimeBase. Must have <a href="#id3"><span class="problematic" id="id4">model_regressor.coef_</span></a>
+and ‘sample_weight’ as a parameter to model_regressor.fit()</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An Explanation object (see explanation.py) with the corresponding
+explanations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_tabular.LimeTabularExplainer.validate_training_data_stats">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_training_data_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">training_data_stats</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_tabular.LimeTabularExplainer.validate_training_data_stats" title="Link to this definition">¶</a></dt>
+<dd><p>Method to validate the structure of training data stats</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.lime_tabular.RecurrentTabularExplainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.lime_tabular.</span></span><span class="sig-name descname"><span class="pre">RecurrentTabularExplainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">training_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'classification'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_selection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretize_continuous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'quartile'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_tabular.RecurrentTabularExplainer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lime.lime_tabular.LimeTabularExplainer" title="lime.lime_tabular.LimeTabularExplainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">LimeTabularExplainer</span></code></a></p>
+<p>An explainer for keras-style recurrent neural networks, where the
+input shape is (n_samples, n_timesteps, n_features). This class
+just extends the LimeTabularExplainer class and reshapes the training
+data and feature names such that they become something like</p>
+<p>(val1_t1, val1_t2, val1_t3, …, val2_t1, …, valn_tn)</p>
+<p>Each of the methods that take data reshape it appropriately,
+so you can pass in the training/testing data exactly as you
+would to the recurrent neural network.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_tabular.RecurrentTabularExplainer.explain_instance">
+<span class="sig-name descname"><span class="pre">explain_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classifier_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_regressor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_tabular.RecurrentTabularExplainer.explain_instance" title="Link to this definition">¶</a></dt>
+<dd><p>Generates explanations for a prediction.</p>
+<p>First, we generate neighborhood data by randomly perturbing features
+from the instance (see __data_inverse). We then learn locally weighted
+linear models on this neighborhood data to explain each of the classes
+in an interpretable way (see lime_base.py).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_row</strong> – 2d numpy array, corresponding to a row</p></li>
+<li><p><strong>classifier_fn</strong> – classifier prediction probability function, which
+takes a numpy array and outputs prediction probabilities. For
+ScikitClassifiers , this is classifier.predict_proba.</p></li>
+<li><p><strong>labels</strong> – iterable with labels to be explained.</p></li>
+<li><p><strong>top_labels</strong> – if not None, ignore labels and produce explanations for
+the K labels with highest prediction probabilities, where K is
+this parameter.</p></li>
+<li><p><strong>num_features</strong> – maximum number of features present in explanation</p></li>
+<li><p><strong>num_samples</strong> – size of the neighborhood to learn the linear model</p></li>
+<li><p><strong>distance_metric</strong> – the distance metric to use for weights.</p></li>
+<li><p><strong>model_regressor</strong> – sklearn regressor to use in explanation. Defaults
+to Ridge regression in LimeBase. Must have
+<a href="#id5"><span class="problematic" id="id6">model_regressor.coef_</span></a> and ‘sample_weight’ as a parameter
+to model_regressor.fit()</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An Explanation object (see explanation.py) with the corresponding
+explanations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.lime_tabular.TableDomainMapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.lime_tabular.</span></span><span class="sig-name descname"><span class="pre">TableDomainMapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaled_row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretized_feature_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_indexes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_tabular.TableDomainMapper" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lime.explanation.DomainMapper" title="lime.explanation.DomainMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">DomainMapper</span></code></a></p>
+<p>Maps feature ids to names, generates table views, etc</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_tabular.TableDomainMapper.map_exp_ids">
+<span class="sig-name descname"><span class="pre">map_exp_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_tabular.TableDomainMapper.map_exp_ids" title="Link to this definition">¶</a></dt>
+<dd><p>Maps ids to feature names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>exp</strong> – list of tuples [(id, weight), (id,weight)]</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of tuples (feature_name, weight)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_tabular.TableDomainMapper.visualize_instance_html">
+<span class="sig-name descname"><span class="pre">visualize_instance_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">div_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_object_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_tabular.TableDomainMapper.visualize_instance_html" title="Link to this definition">¶</a></dt>
+<dd><p>Shows the current example in a table format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exp</strong> – list of tuples [(id, weight), (id,weight)]</p></li>
+<li><p><strong>label</strong> – label id (integer)</p></li>
+<li><p><strong>div_name</strong> – name of div object to be used for rendering(in js)</p></li>
+<li><p><strong>exp_object_name</strong> – name of js explanation object</p></li>
+<li><p><strong>show_table</strong> – if False, don’t show table visualization.</p></li>
+<li><p><strong>show_all</strong> – if True, show zero-weighted features in the table.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-lime.lime_text">
+<span id="lime-lime-text-module"></span><h2>lime.lime_text module<a class="headerlink" href="#module-lime.lime_text" title="Link to this heading">¶</a></h2>
+<p>Functions for explaining text classifiers.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.lime_text.IndexedCharacters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.lime_text.</span></span><span class="sig-name descname"><span class="pre">IndexedCharacters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.IndexedCharacters" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>String with various indexes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_text.IndexedCharacters.inverse_removing">
+<span class="sig-name descname"><span class="pre">inverse_removing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">words_to_remove</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.IndexedCharacters.inverse_removing" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a string after removing the appropriate words.</p>
+<p>If self.bow is false, replaces word with UNKWORDZ instead of removing
+it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>words_to_remove</strong> – list of ids (ints) to remove</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>original raw string with appropriate words removed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_text.IndexedCharacters.num_words">
+<span class="sig-name descname"><span class="pre">num_words</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.IndexedCharacters.num_words" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the number of tokens in the vocabulary for this document.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_text.IndexedCharacters.raw_string">
+<span class="sig-name descname"><span class="pre">raw_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.IndexedCharacters.raw_string" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the original raw string</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_text.IndexedCharacters.string_position">
+<span class="sig-name descname"><span class="pre">string_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.IndexedCharacters.string_position" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a np array with indices to <a href="#id7"><span class="problematic" id="id8">id_</span></a> (int) occurrences</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_text.IndexedCharacters.word">
+<span class="sig-name descname"><span class="pre">word</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.IndexedCharacters.word" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the word that corresponds to <a href="#id9"><span class="problematic" id="id10">id_</span></a> (int)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.lime_text.IndexedString">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.lime_text.</span></span><span class="sig-name descname"><span class="pre">IndexedString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_expression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\\W+'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.IndexedString" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>String with various indexes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_text.IndexedString.inverse_removing">
+<span class="sig-name descname"><span class="pre">inverse_removing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">words_to_remove</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.IndexedString.inverse_removing" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a string after removing the appropriate words.</p>
+<p>If self.bow is false, replaces word with UNKWORDZ instead of removing
+it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>words_to_remove</strong> – list of ids (ints) to remove</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>original raw string with appropriate words removed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_text.IndexedString.num_words">
+<span class="sig-name descname"><span class="pre">num_words</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.IndexedString.num_words" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the number of tokens in the vocabulary for this document.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_text.IndexedString.raw_string">
+<span class="sig-name descname"><span class="pre">raw_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.IndexedString.raw_string" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the original raw string</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_text.IndexedString.string_position">
+<span class="sig-name descname"><span class="pre">string_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.IndexedString.string_position" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a np array with indices to <a href="#id11"><span class="problematic" id="id12">id_</span></a> (int) occurrences</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_text.IndexedString.word">
+<span class="sig-name descname"><span class="pre">word</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.IndexedString.word" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the word that corresponds to <a href="#id13"><span class="problematic" id="id14">id_</span></a> (int)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.lime_text.LimeTextExplainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.lime_text.</span></span><span class="sig-name descname"><span class="pre">LimeTextExplainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kernel_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_selection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_expression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\\W+'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">char_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.LimeTextExplainer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Explains text classifiers.
+Currently, we are using an exponential kernel on cosine distance, and
+restricting explanations to words that are present in documents.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_text.LimeTextExplainer.explain_instance">
+<span class="sig-name descname"><span class="pre">explain_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classifier_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cosine'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_regressor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.LimeTextExplainer.explain_instance" title="Link to this definition">¶</a></dt>
+<dd><p>Generates explanations for a prediction.</p>
+<p>First, we generate neighborhood data by randomly hiding features from
+the instance (see __data_labels_distance_mapping). We then learn
+locally weighted linear models on this neighborhood data to explain
+each of the classes in an interpretable way (see lime_base.py).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text_instance</strong> – raw text string to be explained.</p></li>
+<li><p><strong>classifier_fn</strong> – classifier prediction probability function, which
+takes a list of d strings and outputs a (d, k) numpy array with
+prediction probabilities, where k is the number of classes.
+For ScikitClassifiers , this is classifier.predict_proba.</p></li>
+<li><p><strong>labels</strong> – iterable with labels to be explained.</p></li>
+<li><p><strong>top_labels</strong> – if not None, ignore labels and produce explanations for
+the K labels with highest prediction probabilities, where K is
+this parameter.</p></li>
+<li><p><strong>num_features</strong> – maximum number of features present in explanation</p></li>
+<li><p><strong>num_samples</strong> – size of the neighborhood to learn the linear model</p></li>
+<li><p><strong>distance_metric</strong> – the distance metric to use for sample weighting,
+defaults to cosine similarity</p></li>
+<li><p><strong>model_regressor</strong> – sklearn regressor to use in explanation. Defaults</p></li>
+<li><p><strong>model_regressor.coef</strong> (<em>to Ridge regression in LimeBase. Must have</em>)</p></li>
+<li><p><strong>model_regressor.fit</strong><strong>(</strong><strong>)</strong> (<em>and 'sample_weight' as a parameter to</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An Explanation object (see explanation.py) with the corresponding
+explanations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.lime_text.TextDomainMapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.lime_text.</span></span><span class="sig-name descname"><span class="pre">TextDomainMapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indexed_string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.TextDomainMapper" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lime.explanation.DomainMapper" title="lime.explanation.DomainMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">DomainMapper</span></code></a></p>
+<p>Maps feature ids to words or word-positions</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_text.TextDomainMapper.map_exp_ids">
+<span class="sig-name descname"><span class="pre">map_exp_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.TextDomainMapper.map_exp_ids" title="Link to this definition">¶</a></dt>
+<dd><p>Maps ids to words or word-position strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exp</strong> – list of tuples [(id, weight), (id,weight)]</p></li>
+<li><p><strong>positions</strong> – if True, also return word positions</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of tuples (word, weight), or (word_positions, weight) if
+examples: (‘bad’, 1) or (‘bad_3-6-12’, 1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lime.lime_text.TextDomainMapper.visualize_instance_html">
+<span class="sig-name descname"><span class="pre">visualize_instance_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">div_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_object_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.lime_text.TextDomainMapper.visualize_instance_html" title="Link to this definition">¶</a></dt>
+<dd><p>Adds text with highlighted words to visualization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exp</strong> – list of tuples [(id, weight), (id,weight)]</p></li>
+<li><p><strong>label</strong> – label id (integer)</p></li>
+<li><p><strong>div_name</strong> – name of div object to be used for rendering(in js)</p></li>
+<li><p><strong>exp_object_name</strong> – name of js explanation object</p></li>
+<li><p><strong>text</strong> – if False, return empty</p></li>
+<li><p><strong>opacity</strong> – if True, fade colors according to weight</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-lime.submodular_pick">
+<span id="lime-submodular-pick-module"></span><h2>lime.submodular_pick module<a class="headerlink" href="#module-lime.submodular_pick" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="lime.submodular_pick.SubmodularPick">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lime.submodular_pick.</span></span><span class="sig-name descname"><span class="pre">SubmodularPick</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">explainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_exps_desired</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lime.submodular_pick.SubmodularPick" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for submodular pick</p>
+<p>Saves a representative sample of explanation objects using SP-LIME,
+as well as saving all generated explanations</p>
+<p>First, a collection of candidate explanations are generated
+(see explain_instance). From these candidates, num_exps_desired are
+chosen using submodular pick. (see marcotcr et al paper).</p>
+</dd></dl>
+
+</section>
+<section id="module-lime">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-lime" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">lime_stratified</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Muhammad Rashid.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/lime.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -127,7 +127,7 @@ class TestLimeText(unittest.TestCase):
         self.assertTrue(np.array_equal(indexed_string.as_np, tokenized_string))
         self.assertTrue(np.array_equal(indexed_string.string_start, start_positions))
         self.assertTrue(indexed_string.inverse_vocab == inverse_vocab)
-        self.assertTrue(np.array_equal(indexed_string.positions, positions))
+        self.assertEqual(indexed_string.positions, positions)
 
     def test_indexed_string_callable(self):
         s = 'aabbccddaa'
@@ -144,7 +144,7 @@ class TestLimeText(unittest.TestCase):
         self.assertTrue(np.array_equal(indexed_string.as_np, tokenized_string))
         self.assertTrue(np.array_equal(indexed_string.string_start, start_positions))
         self.assertTrue(indexed_string.inverse_vocab == inverse_vocab)
-        self.assertTrue(np.array_equal(indexed_string.positions, positions))
+        self.assertEqual(indexed_string.positions, positions)
 
     def test_indexed_string_inverse_removing_tokenizer(self):
         s = 'This is a good movie. This, it is a great movie.'
