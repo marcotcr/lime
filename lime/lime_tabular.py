@@ -523,7 +523,8 @@ class LimeTabularExplainer(object):
                                                 ).reshape(num_samples, num_cols)
                 data = np.array(data)
             elif sampling_method == 'lhs':
-                data = lhs(num_cols, samples=num_samples
+                data = lhs(num_cols, samples=num_samples,
+                           random_state=self.random_state
                            ).reshape(num_samples, num_cols)
                 means = np.zeros(num_cols)
                 stdvs = np.array([1]*num_cols)

@@ -646,6 +646,36 @@ class TestLimeTabular(unittest.TestCase):
                          sum([1 if 'petal length' in x else 0 for x in keys]),
                          "Petal Length is a major feature")
 
+    def test_lime_tabular_explainer_lhs_equal_random_state(self):
+        X, y = make_classification(n_samples=1000,
+                                   n_features=20,
+                                   n_informative=2,
+                                   n_redundant=2,
+                                   random_state=10)
+
+        rf = RandomForestClassifier(n_estimators=500, random_state=10)
+        rf.fit(X, y)
+        instance = np.random.RandomState(10).randint(0, X.shape[0])
+        feature_names = ["feature" + str(i) for i in range(20)]
+
+        explainer_1 = LimeTabularExplainer(X,
+                                           feature_names=feature_names,
+                                           discretize_continuous=False,
+                                           random_state=10)
+        exp_1 = explainer_1.explain_instance(X[instance], rf.predict_proba,
+                                             num_samples=500,
+                                             sampling_method='lhs')
+
+        explainer_2 = LimeTabularExplainer(X,
+                                           feature_names=feature_names,
+                                           discretize_continuous=False,
+                                           random_state=10)
+        exp_2 = explainer_2.explain_instance(X[instance], rf.predict_proba,
+                                             num_samples=500,
+                                             sampling_method='lhs')
+
+        self.assertDictEqual(exp_1.as_map(), exp_2.as_map())
+
 
 if __name__ == '__main__':
     unittest.main()
