@@ -161,7 +161,7 @@ def test_stratified_weight_adjustments_match_formula():
     assert np.allclose(weight_adjustments, expected)
 
 
-def test_weight_adjustments_multiply_kernel_weights():
+def test_weight_adjustments_scale_distances_before_kernel():
     recorded = {}
 
     def kernel_fn(distances):
@@ -213,11 +213,13 @@ def test_weight_adjustments_multiply_kernel_weights():
         model_regressor=regressor,
     )
 
-    expected_kernel_weights = np.exp(-(original_distances ** 2))
-    expected_weights = expected_kernel_weights * weight_adjustments
+    # As in the paper's experiments: the factors scale the distances, then the kernel applies.
+    expected_weights = np.exp(-((original_distances * weight_adjustments) ** 2))
 
-    assert np.allclose(recorded["distances"], original_distances)
+    assert np.allclose(recorded["distances"], original_distances * weight_adjustments)
     assert np.allclose(regressor.sample_weight, expected_weights)
+    # the caller's array is left unchanged
+    assert np.array_equal(distances, original_distances)
 
 
 def test_stratified_explain_instance_end_to_end():

@@ -164,12 +164,17 @@ class LimeBase(object):
                 'none': uses all features, ignores num_features
                 'auto': uses forward_selection if num_features <= 6, and
                     'highest_weights' otherwise.
-            weight_adjustments: weights adjustment factors for the data points.
-                These factors are multiplied with the weights from the distance kernel.
+            weight_adjustments: per-sample adjustment factors, or None.
+                Each sample's distance is multiplied by its factor before
+                the distance kernel is applied, so the sample weights are
+                ``kernel_fn(distances * weight_adjustments)``. Stratified
+                sampling passes the factors adj(|x|) of Eq. 12 of Rashid et
+                al., AAAI-24; this is the weighting used for the paper's
+                experiments.
             model_regressor: sklearn regressor to use in explanation.
                 Defaults to Ridge regression if None. Must have
-                model_regressor.coef_ and 'sample_weight' as a parameter
-                to model_regressor.fit()
+                ``model_regressor.coef_`` and accept ``sample_weight`` as a
+                parameter of ``model_regressor.fit()``.
 
         Returns:
             (intercept, exp, score, local_pred):
@@ -181,10 +186,12 @@ class LimeBase(object):
             local_pred is the prediction of the explanation model on the original instance
         """
 
-        weights = self.kernel_fn(distances)
-
         if weight_adjustments is not None:
-            weights *= weight_adjustments
+            # As in the paper's experiments (and lime-stratified 0.0.1): the
+            # adjustment factors scale each sample's distance before the
+            # kernel. A new array, so the caller's distances are not changed.
+            distances = distances * weight_adjustments
+        weights = self.kernel_fn(distances)
         labels_column = neighborhood_labels[:, label]
         used_features = self.feature_selection(neighborhood_data,
                                                labels_column,

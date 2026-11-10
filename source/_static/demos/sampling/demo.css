@@ -1,0 +1,504 @@
+/* The LIME Stratified demo (see demo.js). Colours use Furo's variables when present, with
+   fallbacks for the Read the Docs theme. */
+
+.limestrat-demo {
+  --ls-fg: var(--color-foreground-primary, #1d2128);
+  --ls-muted: var(--color-foreground-secondary, #5a6170);
+  --ls-bg: var(--color-background-primary, #fff);
+  --ls-panel: var(--color-background-secondary, #f6f7f9);
+  --ls-border: var(--color-background-border, #e2e5ea);
+  --ls-accent: var(--color-brand-primary, #2980b9);
+  --ls-mc: #d95f02;
+  --ls-st: #1b9e77;
+  --ls-near: rgba(41, 128, 185, 0.1);
+  --ls-pos: rgb(214, 39, 40);
+  --ls-neg: rgb(31, 119, 180);
+  color: var(--ls-fg);
+  background: var(--ls-panel);
+  border: 1px solid var(--ls-border);
+  border-radius: 14px;
+  padding: 14px;
+  margin: 1.2rem 0 1.6rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  min-height: 300px;
+}
+.limestrat-demo *,
+.limestrat-demo *::before,
+.limestrat-demo *::after {
+  box-sizing: border-box;
+}
+.limestrat-demo-failed,
+.limestrat-demo:not(.limestrat-demo-ready) {
+  background: none;
+  border: 0;
+  padding: 0;
+  min-height: 0;
+}
+.limestrat-demo img.limestrat-demo-fallback,
+.limestrat-demo-failed img {
+  width: 100%;
+  height: auto;
+}
+.limestrat-demo-loading {
+  cursor: progress;
+}
+.limestrat-demo-loading .limestrat-demo-body {
+  opacity: 0.5;
+}
+.limestrat-demo button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.limestrat-demo p {
+  margin: 0;
+}
+
+/* header: photos and prediction */
+.limestrat-demo-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.limestrat-demo-photos {
+  display: flex;
+  gap: 6px;
+}
+.limestrat-demo-photo {
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 9px;
+  background: none;
+  line-height: 0;
+  opacity: 0.6;
+  transition: opacity 150ms, border-color 150ms;
+}
+.limestrat-demo-photo img {
+  width: 44px;
+  height: 44px;
+  border-radius: 7px;
+  display: block;
+}
+.limestrat-demo-photo:hover,
+.limestrat-demo-photo[aria-pressed="true"] {
+  opacity: 1;
+}
+.limestrat-demo-photo[aria-pressed="true"] {
+  border-color: var(--ls-accent);
+}
+.limestrat-demo-prediction {
+  flex: 1 1 16rem;
+  color: var(--ls-muted);
+}
+.limestrat-demo-prediction strong {
+  color: var(--ls-fg);
+}
+
+/* tabs */
+.limestrat-demo-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 3px;
+  background: var(--ls-bg);
+  border: 1px solid var(--ls-border);
+  border-radius: 999px;
+  margin-bottom: 14px;
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.limestrat-demo-tab {
+  border: 0;
+  background: none;
+  border-radius: 999px;
+  padding: 5px 13px;
+  white-space: nowrap;
+  color: var(--ls-muted) !important;
+}
+.limestrat-demo-tab[aria-selected="true"] {
+  background: var(--ls-accent);
+  color: #fff !important;
+}
+
+/* layout */
+.limestrat-demo-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.limestrat-demo-stage-wide {
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+}
+@media (max-width: 700px) {
+  .limestrat-demo-stage,
+  .limestrat-demo-stage-wide {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.limestrat-demo-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+.limestrat-demo-text,
+.limestrat-demo-hint,
+.limestrat-demo-legend,
+.limestrat-demo figcaption {
+  color: var(--ls-muted);
+}
+.limestrat-demo-legend,
+.limestrat-demo figcaption {
+  font-size: 0.8rem;
+}
+.limestrat-demo figure {
+  margin: 0;
+}
+.limestrat-demo figcaption {
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.limestrat-demo-info {
+  min-height: 3em;
+  font-variant-numeric: tabular-nums;
+}
+.limestrat-demo-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  background: var(--ls-border);
+  touch-action: none;
+}
+.limestrat-demo-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--ls-bg);
+  border-radius: 10px;
+  touch-action: none;
+}
+.limestrat-demo-chart text {
+  font-size: 15px;
+  fill: var(--ls-muted);
+}
+.limestrat-demo-chart .ls-axis {
+  stroke: var(--ls-border);
+}
+.limestrat-demo-chart .ls-tick {
+  stroke: var(--ls-border);
+  stroke-dasharray: 2 3;
+}
+.limestrat-demo-chart .ls-near {
+  fill: var(--ls-near);
+}
+.limestrat-demo-chart .ls-cursor {
+  stroke: var(--ls-fg);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+.limestrat-demo-chart .ls-fx {
+  stroke: var(--ls-fg);
+  stroke-width: 1.2;
+  stroke-dasharray: 6 4;
+}
+.limestrat-demo-chart .ls-band {
+  opacity: 0.18;
+}
+
+/* method colours */
+.limestrat-demo-mc {
+  color: var(--ls-mc);
+  font-weight: 600;
+}
+.limestrat-demo-st {
+  color: var(--ls-st);
+  font-weight: 600;
+}
+.limestrat-demo-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  vertical-align: -1px;
+}
+.limestrat-demo-swatch-mc {
+  background: var(--ls-mc);
+}
+.limestrat-demo-swatch-st {
+  background: var(--ls-st);
+}
+.limestrat-demo-swatch-pos {
+  background: var(--ls-pos);
+}
+.limestrat-demo-swatch-neg {
+  background: var(--ls-neg);
+}
+.limestrat-demo-swatch-near {
+  background: var(--ls-near);
+  outline: 1px solid var(--ls-accent);
+}
+
+/* controls */
+.limestrat-demo-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.limestrat-demo-play {
+  width: 38px;
+  height: 38px;
+  flex: none;
+  border-radius: 50%;
+  border: 0;
+  background: var(--ls-accent);
+  color: #fff !important;
+  font-size: 0.9rem;
+}
+.limestrat-demo-slider {
+  flex: 1 1 14rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+.limestrat-demo-slider-label {
+  color: var(--ls-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.limestrat-demo-slider input {
+  flex: 1;
+  accent-color: var(--ls-accent);
+  min-width: 0;
+}
+.limestrat-demo-toggle {
+  display: flex;
+  border: 1px solid var(--ls-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.limestrat-demo-toggle button {
+  border: 0;
+  background: var(--ls-bg);
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+.limestrat-demo-toggle button[aria-pressed="true"] {
+  background: var(--ls-fg);
+  color: var(--ls-bg) !important;
+}
+
+/* the last mask drawn, one cell per superpixel */
+.limestrat-demo-masks {
+  display: grid;
+  gap: 6px;
+}
+.limestrat-demo-mask {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  min-height: 9px;
+}
+.limestrat-demo-mask span {
+  width: 7px;
+  height: 7px;
+  border-radius: 1px;
+  background: var(--ls-border);
+}
+.limestrat-demo-mask-mc span.on {
+  background: var(--ls-mc);
+}
+.limestrat-demo-mask-st span.on {
+  background: var(--ls-st);
+}
+
+/* side-by-side explanations */
+.limestrat-demo-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+@media (max-width: 520px) {
+  .limestrat-demo-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.limestrat-demo-pair h4 {
+  margin: 0 0 6px;
+  font-size: 0.92rem;
+}
+
+/* the per-k summary */
+.limestrat-demo-table-wrap {
+  overflow-x: auto;
+  margin-top: 14px;
+}
+.limestrat-demo table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  background: var(--ls-bg);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.limestrat-demo th,
+.limestrat-demo td {
+  padding: 4px 8px;
+  text-align: right;
+  border-bottom: 1px solid var(--ls-border);
+  white-space: nowrap;
+}
+.limestrat-demo th:first-child,
+.limestrat-demo td:first-child {
+  text-align: left;
+}
+.limestrat-demo tbody tr {
+  cursor: pointer;
+}
+.limestrat-demo tbody tr[aria-selected="true"] {
+  background: var(--ls-panel);
+  font-weight: 600;
+}
+.limestrat-demo td.limestrat-demo-better {
+  color: var(--ls-st);
+}
+
+/* Monte Carlo and stratified side by side */
+.limestrat-demo-controls-top {
+  margin: 0 0 12px;
+}
+.limestrat-demo-col {
+  min-width: 0;
+  padding: 10px;
+  background: var(--ls-bg);
+  border: 1px solid var(--ls-border);
+  border-radius: 10px;
+}
+.limestrat-demo-col h4 {
+  margin: 0 0 2px;
+  font-size: 0.95rem;
+}
+.limestrat-demo-head-metrics {
+  margin: 0 0 6px !important;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+.limestrat-demo-bad {
+  color: #c62828;
+  font-weight: 700;
+}
+.limestrat-demo td.limestrat-demo-bad {
+  color: #c62828;
+}
+.limestrat-demo-duo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  align-items: stretch;
+}
+.limestrat-demo-duo .limestrat-demo-canvas,
+.limestrat-demo-duo .limestrat-demo-dist {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 6px;
+}
+.limestrat-demo-dist {
+  border-radius: 8px;
+}
+.limestrat-demo-sample-row {
+  display: grid;
+  grid-template-columns: 38% minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  margin-top: 8px;
+}
+.limestrat-demo-sample-row figcaption {
+  margin: 0;
+}
+.limestrat-demo-verdict {
+  margin-top: 12px !important;
+  padding: 10px 12px;
+  background: var(--ls-bg);
+  border-left: 4px solid var(--ls-st);
+  border-radius: 6px;
+}
+.limestrat-demo-pair + .limestrat-demo-info {
+  margin-top: 10px;
+}
+.limestrat-demo table caption {
+  caption-side: bottom;
+  text-align: left;
+  padding-top: 4px;
+}
+
+/* the paper's Fig. 7 */
+.limestrat-demo-fig7 {
+  display: grid;
+  gap: 6px;
+  overflow-x: auto;
+}
+.limestrat-demo-fig7-row {
+  display: grid;
+  grid-template-columns: 64px repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  align-items: start;
+  padding: 6px;
+  border-radius: 8px;
+  background: var(--ls-bg);
+  cursor: pointer;
+  min-width: 520px;
+}
+.limestrat-demo-fig7-cell:nth-child(4) {
+  border-left: 2px solid var(--ls-border);
+  padding-left: 6px;
+}
+.limestrat-demo-fig7-cell .limestrat-demo-duo {
+  gap: 3px;
+}
+.limestrat-demo-fig7-head {
+  background: none;
+  cursor: default;
+  font-weight: 600;
+  text-align: center;
+}
+.limestrat-demo-fig7-head div {
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+.limestrat-demo-fig7-head div:nth-child(4) {
+  border-left: 2px solid var(--ls-border);
+}
+.limestrat-demo-fig7-row:not(.limestrat-demo-fig7-head):hover {
+  outline: 2px solid var(--ls-accent);
+}
+.limestrat-demo-fig7-image {
+  font-size: 0.8rem;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.limestrat-demo-fig7-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 3px;
+}
+.limestrat-demo-fig7-cell .limestrat-demo-head-metrics {
+  font-size: 0.78rem;
+  text-align: center;
+}
+.limestrat-demo-fig7-cell figcaption {
+  text-align: center;
+  margin-top: 2px;
+}

@@ -160,8 +160,12 @@ class LimeImageExplainer(object):
             num_samples: size of the neighborhood to learn the linear model
             batch_size: batch size for model predictions
             distance_metric: the distance metric to use for weights.
-            use_stratification: generate data points using stratified sampling
-                instead of the usual Monte Carlo sampling.
+            use_stratification: if True, generate the neighborhood with the
+                stratified sampling of Rashid et al., "Using Stratified
+                Sampling to Improve LIME Image Explanations" (AAAI-24):
+                every number of preserved superpixels is equally likely and
+                sample weights are corrected by adjustment factors. If False
+                (default), use the original Monte Carlo sampling of LIME.
             model_regressor: sklearn regressor to use in explanation. Defaults
             to Ridge regression in LimeBase. Must have model_regressor.coef_
             and 'sample_weight' as a parameter to model_regressor.fit()
@@ -247,12 +251,18 @@ class LimeImageExplainer(object):
                 matrix of prediction probabilities
             num_samples: size of the neighborhood to learn the linear model
             batch_size: classifier_fn will be called on batches of this size.
+            use_stratification: if True, draw each mask from B(q) with
+                q ~ Uniform(0, 1) (stratified sampling) instead of B(0.5).
             progress_bar: if True, show tqdm progress bar.
 
         Returns:
-            A tuple (data, labels), where:
-                data: dense num_samples * num_superpixels
-                labels: prediction probabilities matrix
+            A tuple ``(data, labels, weight_adjustments)``. ``data`` is a dense
+            num_samples x num_superpixels binary mask matrix whose first row
+            is always the unmasked image. ``labels`` is the matrix of
+            prediction probabilities. ``weight_adjustments`` holds the
+            per-sample factors ``(k + 1) * binom(k, sum(x)) / 2**k`` when
+            ``use_stratification`` is True (1 for the first row), and is
+            None otherwise.
         """
         n_features = np.unique(segments).shape[0]
         if use_stratification:
