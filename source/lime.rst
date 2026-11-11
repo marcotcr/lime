@@ -7,7 +7,6 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   lime.tests
    lime.utils
    lime.wrappers
 

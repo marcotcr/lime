@@ -35,10 +35,16 @@ dev = [
     "mypy",
     "build",
 ]
+docs = [
+    "sphinx>=7",
+    "sphinx-rtd-theme>=2",
+]
 
 [project.urls]
 Homepage = "https://github.com/rashidrao-pk/lime_stratified"
 Issues = "https://github.com/rashidrao-pk/lime_stratified/issues"
+Documentation = "https://lime-stratified-docs.readthedocs.io/en/latest/"
+Paper = "https://doi.org/10.1609/aaai.v38i13.29397"
 
 [build-system]
 requires = ["setuptools>=61", "wheel"]

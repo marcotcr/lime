@@ -1,5 +1,3 @@
-@import url("basic.css");
-
 /* -- page layout ----------------------------------------------------------- */
 
 body {
@@ -160,8 +158,8 @@ div.sphinxsidebar input {
     font-size: 1em;
 }
 
-div.sphinxsidebar #searchbox input[type="text"] {
-    width: 160px;
+div.sphinxsidebar #searchbox {
+    margin: 1em 0;
 }
 
 div.sphinxsidebar .search > div {
@@ -261,10 +259,6 @@ div.admonition p.admonition-title {
 
 div.admonition p.last {
     margin-bottom: 0;
-}
-
-div.highlight {
-    background-color: #fff;
 }
 
 dt:target, .highlight {
@@ -454,7 +448,7 @@ ul, ol {
 }
 
 pre {
-    background: #EEE;
+    background: unset;
     padding: 7px 30px;
     margin: 15px 0px;
     line-height: 1.3em;
@@ -485,13 +479,13 @@ a.reference {
     border-bottom: 1px dotted #004B6B;
 }
 
+a.reference:hover {
+    border-bottom: 1px solid #6D4100;
+}
+
 /* Don't put an underline on images */
 a.image-reference, a.image-reference:hover {
     border-bottom: none;
-}
-
-a.reference:hover {
-    border-bottom: 1px solid #6D4100;
 }
 
 a.footnote-reference {
@@ -509,68 +503,7 @@ a:hover tt, a:hover code {
     background: #EEE;
 }
 
-
-@media screen and (max-width: 870px) {
-
-    div.sphinxsidebar {
-    	display: none;
-    }
-
-    div.document {
-       width: 100%;
-
-    }
-
-    div.documentwrapper {
-    	margin-left: 0;
-    	margin-top: 0;
-    	margin-right: 0;
-    	margin-bottom: 0;
-    }
-
-    div.bodywrapper {
-    	margin-top: 0;
-    	margin-right: 0;
-    	margin-bottom: 0;
-    	margin-left: 0;
-    }
-
-    ul {
-    	margin-left: 0;
-    }
-
-	li > ul {
-        /* Matches the 30px from the "ul, ol" selector above */
-		margin-left: 30px;
-	}
-
-    .document {
-    	width: auto;
-    }
-
-    .footer {
-    	width: auto;
-    }
-
-    .bodywrapper {
-    	margin: 0;
-    }
-
-    .footer {
-    	width: auto;
-    }
-
-    .github {
-        display: none;
-    }
-
-
-
-}
-
-
-
-@media screen and (max-width: 875px) {
+@media screen and (max-width: 940px) {
 
     body {
         margin: 0;
@@ -580,12 +513,16 @@ a:hover tt, a:hover code {
     div.documentwrapper {
         float: none;
         background: #fff;
+        margin-left: 0;
+        margin-top: 0;
+        margin-right: 0;
+        margin-bottom: 0;
     }
 
     div.sphinxsidebar {
         display: block;
         float: none;
-        width: 102.5%;
+        width: unset;
         margin: 50px -30px -20px -30px;
         padding: 10px 20px;
         background: #333;
@@ -620,7 +557,13 @@ a:hover tt, a:hover code {
 
     div.body {
         min-height: 0;
+        min-width: auto; /* fixes width on small screens, breaks .hll */
         padding: 0;
+    }
+    
+    .hll {
+        /* "fixes" the breakage */
+        width: max-content;
     }
 
     .rtd_doc_footer {
@@ -635,12 +578,17 @@ a:hover tt, a:hover code {
         width: auto;
     }
 
-    .footer {
-        width: auto;
-    }
-
     .github {
         display: none;
+    }
+
+    ul {
+        margin-left: 0;
+    }
+
+    li > ul {
+       /* Matches the 30px from the "ul, ol" selector above */
+        margin-left: 30px;
     }
 }
 
@@ -705,4 +653,11 @@ nav#breadcrumbs li+li:before {
     div.related {
         display: none;
     }
+}
+
+img.github  {
+    position: absolute;
+    top: 0;
+    border: 0;
+    right: 0;
 }

@@ -1,0 +1,13 @@
+{
+  "num_samples": 1000,
+  "repeats": 10,
+  "seed": 1234,
+  "k": [50, 100, 150, 200],
+  "photos": [
+    {"id": "orange", "title": "Orange", "file": "photos/ILSVRC2012_test_00000114.JPEG"},
+    {"id": "wardrobe", "title": "Wardrobe", "file": "photos/ILSVRC2012_test_00000147.JPEG"},
+    {"id": "milk_can", "title": "Milk can", "file": "photos/ILSVRC2012_test_00000060.JPEG"},
+    {"id": "lynx", "title": "Lynx", "file": "photos/ILSVRC2012_test_00000144.JPEG"},
+    {"id": "ringneck_snake", "title": "Ringneck snake", "file": "photos/ILSVRC2012_test_00000066.JPEG"}
+  ]
+}
