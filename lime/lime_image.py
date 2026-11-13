@@ -231,6 +231,9 @@ class LimeImageExplainer(object):
                     progress_bar=True):
         """Generates images and predictions in the neighborhood of this image.
 
+        All disabled superpixels are combined into one membership mask per
+        sample before replacing their pixels with those from fudged_image.
+
         Args:
             image: 3d numpy array, the image
             fudged_image: 3d numpy array, image to replace original image when
@@ -257,9 +260,7 @@ class LimeImageExplainer(object):
         for row in rows:
             temp = copy.deepcopy(image)
             zeros = np.where(row == 0)[0]
-            mask = np.zeros(segments.shape).astype(bool)
-            for z in zeros:
-                mask[segments == z] = True
+            mask = np.isin(segments, zeros)
             temp[mask] = fudged_image[mask]
             imgs.append(temp)
             if len(imgs) == batch_size:
